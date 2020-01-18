@@ -104,7 +104,8 @@ int getRandomValue(int lower, int upper)
         int num = (rand() % (upper - lower + 1)) + lower;
         if(board[num].elementType == TABLE
                 || board[num].elementType == HERO
-                || board[num].elementType == BOSS)
+                || board[num].elementType == BOSS
+                || board[num].elementType == BOTTLE)
         {
             continue;
         }
@@ -158,22 +159,7 @@ void play(SDL_Surface *screen)
     setFireLine(screen) ;
 
 }
-int setRandomBottlePosition(SDL_Surface *screen, int pos1 , int pos2)
-{
-    int value ;
 
-
-    do{
-       value = getRandomValue(pos1,pos2) ;
-    }
-    while(board[value].elementType =! NONE) ;
-
-    return value ;
-
-
-
-
-}
 void moveCharacter(SDL_Surface *screen, int direction)
 {
     //TODO: replace cases by enum.
