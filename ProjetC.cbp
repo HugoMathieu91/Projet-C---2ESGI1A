@@ -45,6 +45,9 @@
 		<Unit filename="functions.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="init.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>

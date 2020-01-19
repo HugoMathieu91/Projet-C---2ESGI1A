@@ -5,18 +5,31 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_ttf.h>
+#include <SDL/SDL_mixer.h>
 #include <winsock.h>
 #include "prototypes.h"
 #include "constants.h"
 #include "init.c"
+#include <pthread.h>
 
 
 GridSquare board[144];
-int bottleCount ;
+//int bottleCount ;
 ImageToDisplay hero ;
 
 
+void getAudio(int choice)
+{
+  Mix_Music *music ;
+  switch(choice)
+  {
+    case 0:
+        music = Mix_LoadMUS("audio/mainMusic.mp3") ;
+        break ;
+  }
+  Mix_PlayMusic(music, 1) ;
 
+}
 void setFire()
 {
     fireSprites[0] =  "graphics/Fire1.png" ;
@@ -169,6 +182,9 @@ void moveCharacter(SDL_Surface *screen, int direction)
     int desiredDownPosition = 0;
 
 
+
+
+
     char scorePlayer[10] ;
 
     SDL_Surface *score = NULL ;
@@ -296,6 +312,7 @@ void moveCharacter(SDL_Surface *screen, int direction)
         setNextSprite(direction);
         setSprite(screen, desiredRightPosition, heroRightSprites[currentCharacterSprite], HERO);
         break;
+
     case 3:
         desiredDownPosition = currentCharacterPosition + 12;
         if(desiredDownPosition > 143)
@@ -331,16 +348,61 @@ void moveCharacter(SDL_Surface *screen, int direction)
         break;
     }
     currentDirection = direction;
-    sprintf(scorePlayer, "%d", bottleCount) ;
-            score = TTF_RenderText_Blended(police, scorePlayer, color);
 
-             SDL_BlitSurface(score, NULL, screen, &scorePosition) ;
-            SDL_Flip(screen);
-            SDL_FreeSurface(score) ;
+    sprintf(scorePlayer, "%d", bottleCount) ;
+    score = TTF_RenderText_Blended(police, scorePlayer, color);
+
+    SDL_BlitSurface(score, NULL, screen, &scorePosition) ;
+    SDL_Flip(screen);
+    SDL_FreeSurface(score) ;
+
+    if(bottleCount == 7)
+    {
+        //sananesAttacks(screen) ;
+    }
 }
+
+/*void *attack(void *arg)
+{
+    SDL_Surface *threadScreen ;
+    threadScreen = NULL ;
+
+    SDL_Renderer *renderer = NULL;
+
+
+
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 100);
+    SDL_RenderFillRect(renderer, NULL);
+    SDL_RenderPresent(renderer);
+    setSprite(threadScreen, firePosition,fireSprites[0], FIRE) ;
+}
+void sananesAttacks(SDL_Surface *screen)
+{
+    pthread_create(&fireballs,NULL,attack1,NULL) ;
+
+    int lastTime = 0 ;
+    int actualTime = 0 ;
+    int i  = 0;
+
+    actualTime = SDL_GetTicks() ;
+    int firePosition = 41 ;
+    do{
+        if(actualTime - lastTime > 10000)
+        {
+            firePosition+=12 ;
+            setSprite(screen,firePosition,fireSprites[0], FIRE) ;
+            i++;
+        }
+    } while(i!=6) ;
+
+
+}*/
+
+
 
 int menu(SDL_Surface *screen)
 {
+
     SDL_Surface *imageMenu = NULL;
     SDL_Surface *champagneSelect = NULL ;
 
@@ -574,6 +636,7 @@ int introduction(SDL_Surface *screen)
 
                         else if(dialNumber == 3)
                         {
+                            getAudio(0) ;
                             getLevels(screen,0) ;
                             placeCharacter(screen,2, 175,50 );
                             placeCharacter(screen, 1,550,250) ;
@@ -585,6 +648,7 @@ int introduction(SDL_Surface *screen)
                         {
                             play(screen) ;
                             initControls(screen) ;
+                            //sananesAttacks(screen) ;
                         }
                     }
                 }

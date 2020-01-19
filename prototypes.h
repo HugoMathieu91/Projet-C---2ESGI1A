@@ -15,5 +15,7 @@ int startGame(SDL_Surface *screen);
 void setFireLine(SDL_Surface *screen) ;
 void setSprite(SDL_Surface *screen, int position, const char *sprite, ElementType elementType) ;
 
+void initControls(SDL_Surface *screen);
+
 
 //void movement(SDL_Surface *screen, int heroDirection, Character hero);
