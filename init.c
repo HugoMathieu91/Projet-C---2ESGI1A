@@ -1,6 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <pthread.h>
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
+#include <SDL/SDL_ttf.h>
+#include <SDL/SDL_mixer.h>
 
 
 const char *heroLeftSprites[3];
@@ -19,8 +23,13 @@ int currentFireBallPosition;
 
 
 int bottleCount ;
+SDL_Surface *screen ;
 
 pthread_t fireballsThread ;
+
+ Mix_Music *music ;
+
+
 
 
 

@@ -4,7 +4,7 @@ void pause() ;
 int menu(SDL_Surface *screen) ;
 int settings(SDL_Surface *screen) ;
 int enterYourName() ;
-int introduction(SDL_Surface *screen) ;
+int introduction() ;
 void getLevels(SDL_Surface *screen, int levelChoice);
 void placeCharacter(SDL_Surface *screen, int choice, int x, int y);
 void introDialog(SDL_Surface *screen, int dialNumb) ;
@@ -16,6 +16,7 @@ void setFireLine(SDL_Surface *screen) ;
 void setSprite(SDL_Surface *screen, int position, const char *sprite, ElementType elementType) ;
 
 void initControls(SDL_Surface *screen);
+void getAudio(int choice);
 
 
 //void movement(SDL_Surface *screen, int heroDirection, Character hero);

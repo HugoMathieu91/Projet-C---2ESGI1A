@@ -39,6 +39,7 @@
 			<Add option="-lSDL" />
 			<Add option="-lSDL_image" />
 			<Add option="-lSDL_ttf" />
+			<Add option="-lSDL_mixer" />
 			<Add directory="C:/Users/HUGO/Desktop/COURS/2EME ANNEE/C/Projet/ProjetC/lib" />
 		</Linker>
 		<Unit filename="constants.h" />

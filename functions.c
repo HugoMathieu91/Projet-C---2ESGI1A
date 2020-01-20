@@ -20,7 +20,7 @@ ImageToDisplay hero ;
 
 void getAudio(int choice)
 {
-  Mix_Music *music ;
+  //Mix_Music *music ;
   switch(choice)
   {
     case 0:
@@ -170,6 +170,10 @@ void play(SDL_Surface *screen)
 
     getLevels(screen, 1) ;
     setFireLine(screen) ;
+
+
+
+
 
 }
 
@@ -589,15 +593,17 @@ int settings(SDL_Surface* screen)
 
 int introduction(SDL_Surface *screen)
 {
+
+
     int repeat = 1 ;
     int dialNumber =  1 ;
 
     SDL_Event event;
     SDL_WM_SetCaption("ESGI Adventure", NULL) ; //Nouvelle fenetre
     screen = SDL_SetVideoMode(600,600,32,SDL_HWSURFACE) ;
-    introDialog(screen, 0) ;
-    int run = 1 ;
 
+    int run = 1 ;
+     introDialog(screen, 0) ;
     while(run)
     {
         SDL_WaitEvent(&event) ;
@@ -605,19 +611,22 @@ int introduction(SDL_Surface *screen)
         switch(event.type)
         {
         case SDL_QUIT:
+
             exit(EXIT_SUCCESS) ;
+            run =0 ;
             break ;
+
 
         case SDL_KEYDOWN:
             switch(event.key.keysym.sym)
             {
             case SDLK_ESCAPE:
-                run = 0 ;
+
                 menu(screen) ;
+                run = 0 ;
                 break ;
 
             case SDLK_RETURN:
-                //getLevels(screen,0) ;
 
                 while(repeat)
                 {
@@ -646,8 +655,10 @@ int introduction(SDL_Surface *screen)
 
                         else
                         {
+
                             play(screen) ;
                             initControls(screen) ;
+
                             //sananesAttacks(screen) ;
                         }
                     }
@@ -675,12 +686,20 @@ void initControls(SDL_Surface *screen)
         switch(control.type)
         {
         case SDL_QUIT:
+            exit(EXIT_SUCCESS) ;
             wait = 0 ;
-            return EXIT_SUCCESS ;
             break ;
+
+
         case SDL_KEYDOWN:
             switch(control.key.keysym.sym)
             {
+            case SDLK_ESCAPE:
+                Mix_FreeMusic(music) ;
+                Mix_CloseAudio();
+                menu(screen) ;
+
+                break ;
             case SDLK_LEFT:
                 moveCharacter(screen, 0);
                 break ;
@@ -703,7 +722,11 @@ void initControls(SDL_Surface *screen)
         }
     }
 
+
+
 }
+
+
 
 //Appelle les dialogues durant l'introduction du jeu
 void introDialog(SDL_Surface *screen, int dialNumb)
