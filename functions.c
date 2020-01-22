@@ -18,6 +18,10 @@ GridSquare board[144];
 ImageToDisplay hero ;
 
 
+
+
+
+
 void getAudio(int choice)
 {
   //Mix_Music *music ;
@@ -58,18 +62,18 @@ void setHeroSprites()
     heroDownSprites[2] = "graphics/GuyBot3.png";
 }
 
-void setFireLine(SDL_Surface *screen)
+void setFireLine()
 {
     int i ;
     setFire() ;
     for(i=36 ; i<=47 ; i++)
     {
-        setSprite(screen,i, fireSprites[0], FIRE) ;
+        setSprite(i, fireSprites[0], FIRE) ;
     }
 }
 
 //Set a sprite on the game grid, arguments: current screen, position, elementType (see constants.h for enumeration)
-void setSprite(SDL_Surface *screen, int position, const char *sprite, ElementType elementType)
+void setSprite(int position, const char *sprite, ElementType elementType)
 {
     //grid is 144 squares
     if(position > 144)
@@ -118,7 +122,8 @@ int getRandomValue(int lower, int upper)
         if(board[num].elementType == TABLE
                 || board[num].elementType == HERO
                 || board[num].elementType == BOSS
-                || board[num].elementType == BOTTLE)
+                || board[num].elementType == BOTTLE
+                || board[num].elementType ==FIRE)
         {
             continue;
         }
@@ -127,7 +132,7 @@ int getRandomValue(int lower, int upper)
 }
 
 //Generate game grid
-void generateGrid(SDL_Surface *screen)
+void generateGrid()
 {
     int initialX = 0;
     int incrementalX = initialX;
@@ -168,8 +173,8 @@ void play(SDL_Surface *screen)
 
     setHeroSprites();
 
-    getLevels(screen, 1) ;
-    setFireLine(screen) ;
+    getLevels(1) ;
+    setFireLine() ;
 
 
 
@@ -205,7 +210,7 @@ void moveCharacter(SDL_Surface *screen, int direction)
     color.g = 0 ;
     color.b = 0 ;
 
-    setSprite(screen, 0,"graphics/testGrid.png", NONE);
+    setSprite(0,"graphics/testGrid.png", NONE);
     switch(direction)
     {
 
@@ -221,13 +226,13 @@ void moveCharacter(SDL_Surface *screen, int direction)
         desiredLeftPosition = currentCharacterPosition -1;
         if(board[desiredLeftPosition].elementType == TABLE)
         {
-            setSprite(screen, currentCharacterPosition, heroLeftSprites[0], HERO);
+            setSprite(currentCharacterPosition, heroLeftSprites[0], HERO);
             return;
         }
 
         if(board[desiredLeftPosition].elementType == FIRE)
         {
-            setSprite(screen, currentCharacterPosition, heroLeftSprites[0], HERO);
+            setSprite(currentCharacterPosition, heroLeftSprites[currentCharacterSprite], HERO);
             return;
         }
 
@@ -235,15 +240,15 @@ void moveCharacter(SDL_Surface *screen, int direction)
         {
             //TODO Create method (function for noob) to setBottlePosition.
             int value = getRandomValue(48,143);
-            setSprite(screen, value, "graphics/bottle.png", BOTTLE);
+            setSprite(value, "graphics/bottle.png", BOTTLE);
             bottleCount++ ;
         }
 
-        setSprite(screen, currentCharacterPosition, "graphics/testGrid.png", NONE);
+        setSprite(currentCharacterPosition, "graphics/testGrid.png", NONE);
 
         currentCharacterPosition = desiredLeftPosition;
         setNextSprite(direction);
-        setSprite(screen, desiredLeftPosition, heroLeftSprites[currentCharacterSprite], HERO);
+        setSprite(desiredLeftPosition, heroLeftSprites[currentCharacterSprite], HERO);
         break;
     case 1:
         desiredUpPosition = currentCharacterPosition - 12;
@@ -254,32 +259,32 @@ void moveCharacter(SDL_Surface *screen, int direction)
 
         if(board[desiredUpPosition].elementType == TABLE)
         {
-            setSprite(screen, currentCharacterPosition, heroUpSprites[0], HERO);
+            setSprite(currentCharacterPosition, heroUpSprites[currentCharacterSprite], HERO);
             return;
         }
 
 
         if(board[desiredUpPosition].elementType == FIRE)
         {
-            setSprite(screen, currentCharacterPosition, heroUpSprites[0], HERO);
+            setSprite(currentCharacterPosition, heroUpSprites[currentCharacterSprite], HERO);
             return;
         }
 
         if(board[desiredUpPosition].elementType == BOTTLE)
         {
             int value = getRandomValue(48,143);
-            setSprite(screen, value, "graphics/bottle.png", BOTTLE);
+            setSprite(value, "graphics/bottle.png", BOTTLE);
             bottleCount++ ;
 
 
 
         }
 
-        setSprite(screen, currentCharacterPosition,"graphics/testGrid.png", NONE);
+        setSprite(currentCharacterPosition,"graphics/testGrid.png", NONE);
 
         currentCharacterPosition = desiredUpPosition;
         setNextSprite(direction);
-        setSprite(screen, currentCharacterPosition, heroUpSprites[currentCharacterSprite], HERO);
+        setSprite(currentCharacterPosition, heroUpSprites[currentCharacterSprite], HERO);
         break;
     case 2:
         if(((int)currentCharacterPosition + 1) % 12 == 0)
@@ -290,13 +295,13 @@ void moveCharacter(SDL_Surface *screen, int direction)
         desiredRightPosition = currentCharacterPosition +1;
         if(board[desiredRightPosition].elementType == TABLE)
         {
-            setSprite(screen, currentCharacterPosition, heroRightSprites[0], HERO);
+            setSprite(currentCharacterPosition, heroRightSprites[0], HERO);
             return;
         }
 
         if(board[desiredRightPosition].elementType == FIRE)
         {
-            setSprite(screen, currentCharacterPosition, heroRightSprites[0], HERO);
+            setSprite(currentCharacterPosition, heroRightSprites[currentCharacterSprite], HERO);
             return;
         }
 
@@ -304,17 +309,14 @@ void moveCharacter(SDL_Surface *screen, int direction)
         if(board[desiredRightPosition].elementType == BOTTLE)
         {
             int value = getRandomValue(48,143);
-            setSprite(screen, value, "graphics/bottle.png", BOTTLE);
+            setSprite(value, "graphics/bottle.png", BOTTLE);
              bottleCount++ ;
-
-            //Technique pour ttf un int
-
         }
 
-        setSprite(screen, currentCharacterPosition,"graphics/testGrid.png", NONE);
+        setSprite(currentCharacterPosition,"graphics/testGrid.png", NONE);
         currentCharacterPosition= (int)desiredRightPosition;
         setNextSprite(direction);
-        setSprite(screen, desiredRightPosition, heroRightSprites[currentCharacterSprite], HERO);
+        setSprite(desiredRightPosition, heroRightSprites[currentCharacterSprite], HERO);
         break;
 
     case 3:
@@ -326,29 +328,29 @@ void moveCharacter(SDL_Surface *screen, int direction)
 
         if(board[desiredDownPosition].elementType == TABLE)
         {
-            setSprite(screen, currentCharacterPosition, heroDownSprites[0], HERO);
+            setSprite(currentCharacterPosition, heroDownSprites[0], HERO);
             return;
         }
 
         if(board[desiredDownPosition].elementType == FIRE)
         {
-            setSprite(screen, currentCharacterPosition, heroDownSprites[0], HERO);
+            setSprite(currentCharacterPosition, heroDownSprites[currentCharacterSprite], HERO);
             return;
         }
 
         if(board[desiredDownPosition].elementType == BOTTLE)
         {
             int value = getRandomValue(48,143);
-            setSprite(screen, value, "graphics/bottle.png", BOTTLE);
+            setSprite(value, "graphics/bottle.png", BOTTLE);
             bottleCount++ ;
 
             //Technique pour ttf un int
 
         }
-        setSprite(screen, currentCharacterPosition,"graphics/testGrid.png", NONE);
+        setSprite(currentCharacterPosition,"graphics/testGrid.png", NONE);
         currentCharacterPosition = desiredDownPosition;
         setNextSprite(direction);
-        setSprite(screen, currentCharacterPosition, heroDownSprites[currentCharacterSprite], HERO);
+        setSprite(currentCharacterPosition, heroDownSprites[currentCharacterSprite], HERO);
         break;
     }
     currentDirection = direction;
@@ -360,47 +362,35 @@ void moveCharacter(SDL_Surface *screen, int direction)
     SDL_Flip(screen);
     SDL_FreeSurface(score) ;
 
-    if(bottleCount == 7)
+    if(bottleCount == 2)
     {
-        //sananesAttacks(screen) ;
+        sananesAttacks() ;
+
     }
 }
 
-/*void *attack(void *arg)
+
+void sananesAttacks()
 {
-    SDL_Surface *threadScreen ;
-    threadScreen = NULL ;
 
-    SDL_Renderer *renderer = NULL;
+   int i ;
+   for (i =41 ; i<=113; i+=12)
+   {
+       setSprite(i, fireSprites[0],FIRE) ;
+
+   }
+
+   for (i =41 ; i<=101; i+=12)
+   {
+       setSprite(i, "graphics/testGrid.png",NONE) ;
+
+   }
 
 
 
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 100);
-    SDL_RenderFillRect(renderer, NULL);
-    SDL_RenderPresent(renderer);
-    setSprite(threadScreen, firePosition,fireSprites[0], FIRE) ;
 }
-void sananesAttacks(SDL_Surface *screen)
-{
-    pthread_create(&fireballs,NULL,attack1,NULL) ;
-
-    int lastTime = 0 ;
-    int actualTime = 0 ;
-    int i  = 0;
-
-    actualTime = SDL_GetTicks() ;
-    int firePosition = 41 ;
-    do{
-        if(actualTime - lastTime > 10000)
-        {
-            firePosition+=12 ;
-            setSprite(screen,firePosition,fireSprites[0], FIRE) ;
-            i++;
-        }
-    } while(i!=6) ;
 
 
-}*/
 
 
 
@@ -591,19 +581,23 @@ int settings(SDL_Surface* screen)
     return EXIT_SUCCESS ;
 }
 
-int introduction(SDL_Surface *screen)
+int introduction()
 {
-
 
     int repeat = 1 ;
     int dialNumber =  1 ;
+        int run = 1 ;
 
     SDL_Event event;
-    SDL_WM_SetCaption("ESGI Adventure", NULL) ; //Nouvelle fenetre
-    screen = SDL_SetVideoMode(600,600,32,SDL_HWSURFACE) ;
+     //Nouvelle fenetre
+     screen = SDL_SetVideoMode(600,600,32,SDL_HWSURFACE) ;
+    SDL_WM_SetCaption("ESGI Adventure", NULL) ;
 
-    int run = 1 ;
-     introDialog(screen, 0) ;
+
+
+
+    getLevels(0) ;
+     introDialog(0) ;
     while(run)
     {
         SDL_WaitEvent(&event) ;
@@ -636,20 +630,20 @@ int introduction(SDL_Surface *screen)
                     {
                         if(dialNumber<3)
                         {
-                            getLevels(screen,0) ;
-                            placeCharacter(screen, 1,550,250) ;
-                            placeCharacter(screen, 0,175,50 ) ;
-                            introDialog(screen, dialNumber) ;
+                            getLevels(0) ;
+                            placeCharacter(1,550,250) ;
+                            placeCharacter(0,175,50 ) ;
+                            introDialog(dialNumber) ;
                             dialNumber++ ;
                         }
 
                         else if(dialNumber == 3)
                         {
                             getAudio(0) ;
-                            getLevels(screen,0) ;
-                            placeCharacter(screen,2, 175,50 );
-                            placeCharacter(screen, 1,550,250) ;
-                            introDialog(screen, dialNumber) ;
+                            getLevels(0) ;
+                            placeCharacter(2, 175,50 );
+                            placeCharacter(1,550,250) ;
+                            introDialog(dialNumber) ;
                             dialNumber++ ;
                         }
 
@@ -675,7 +669,7 @@ int introduction(SDL_Surface *screen)
     return EXIT_SUCCESS ;
 }
 
-void initControls(SDL_Surface *screen)
+void initControls()
 {
     int wait = 1 ;
     SDL_Event control;
@@ -729,7 +723,7 @@ void initControls(SDL_Surface *screen)
 
 
 //Appelle les dialogues durant l'introduction du jeu
-void introDialog(SDL_Surface *screen, int dialNumb)
+void introDialog(int dialNumb)
 {
     TTF_Init() ;
     if ( TTF_Init() == -1 )
@@ -790,7 +784,7 @@ void introDialog(SDL_Surface *screen, int dialNumb)
 }
 
 //Placer un personnage sur le screen (utiliser dans l'introduction seulement)
-void placeCharacter(SDL_Surface *screen, int choice, int x, int y)
+void placeCharacter(int choice, int x, int y)
 {
 
     // Character hero ;
@@ -825,7 +819,7 @@ void placeCharacter(SDL_Surface *screen, int choice, int x, int y)
 
 
 //Charger le niveau de notre choix
-void getLevels(SDL_Surface *screen, int levelChoice)
+void getLevels(int levelChoice)
 {
     SDL_Surface *level = NULL ;
     SDL_Rect position ;
@@ -844,35 +838,35 @@ void getLevels(SDL_Surface *screen, int levelChoice)
     case 1 :
         // setHeroSprites();
 
-        setSprite(screen, currentCharacterPosition, heroLeftSprites[currentCharacterSprite], HERO);
-        setSprite(screen, 111, "graphics/bottle.png", BOTTLE);
+        setSprite(currentCharacterPosition, heroLeftSprites[currentCharacterSprite], HERO);
+        setSprite(111, "graphics/bottle.png", BOTTLE);
 
         //LEFT TABLE RANK
-        setSprite(screen, 61, "graphics/TableLeft.png", TABLE);
-        setSprite(screen, 62, "graphics/TableRight.png", TABLE);
-        setSprite(screen, 85, "graphics/TableLeft.png", TABLE);
-        setSprite(screen, 86, "graphics/TableRight.png", TABLE);
-        setSprite(screen, 109, "graphics/TableLeft.png", TABLE);
-        setSprite(screen, 110, "graphics/TableRight.png", TABLE);
+        setSprite(61, "graphics/TableLeft.png", TABLE);
+        setSprite(62, "graphics/TableRight.png", TABLE);
+        setSprite(85, "graphics/TableLeft.png", TABLE);
+        setSprite(86, "graphics/TableRight.png", TABLE);
+        setSprite(109, "graphics/TableLeft.png", TABLE);
+        setSprite(110, "graphics/TableRight.png", TABLE);
 
         //CENTER TABLE RANK
-        setSprite(screen, 65, "graphics/TableLeft.png", TABLE);
-        setSprite(screen, 66, "graphics/TableRight.png", TABLE);
-        setSprite(screen, 89, "graphics/TableLeft.png", TABLE);
-        setSprite(screen, 90, "graphics/TableRight.png", TABLE);
-        setSprite(screen, 113, "graphics/TableLeft.png", TABLE);
-        setSprite(screen, 114, "graphics/TableRight.png", TABLE);
+        setSprite(65, "graphics/TableLeft.png", TABLE);
+        setSprite(6, "graphics/TableRight.png", TABLE);
+        setSprite(89, "graphics/TableLeft.png", TABLE);
+        setSprite(90, "graphics/TableRight.png", TABLE);
+        setSprite(113, "graphics/TableLeft.png", TABLE);
+        setSprite(114, "graphics/TableRight.png", TABLE);
 
         //RIGHT TABLE RANK
-        setSprite(screen, 69, "graphics/TableLeft.png", TABLE);
-        setSprite(screen, 70, "graphics/TableRight.png", TABLE);
-        setSprite(screen, 93, "graphics/TableLeft.png", TABLE);
-        setSprite(screen, 94, "graphics/TableRight.png", TABLE);
-        setSprite(screen, 117, "graphics/TableLeft.png", TABLE);
-        setSprite(screen, 118, "graphics/TableRight.png", TABLE);
+        setSprite(69, "graphics/TableLeft.png", TABLE);
+        setSprite(70, "graphics/TableRight.png", TABLE);
+        setSprite(93, "graphics/TableLeft.png", TABLE);
+        setSprite(94, "graphics/TableRight.png", TABLE);
+        setSprite(117, "graphics/TableLeft.png", TABLE);
+        setSprite(118, "graphics/TableRight.png", TABLE);
 
         //BOSS
-        setSprite(screen, 5, "graphics/angryboss.png", BOSS);
+        setSprite(5, "graphics/angryboss.png", BOSS);
 
 
     default:

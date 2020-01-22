@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1579559075 source:c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\main.c
+1579721195 source:c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\main.c
 	<stdio.h>
 	<stdlib.h>
 	<time.h>
@@ -10,7 +10,7 @@
 	"constants.h"
 	"prototypes.h"
 
-1579559057 source:c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\functions.c
+1579721831 source:c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\functions.c
 	<stdlib.h>
 	<stdio.h>
 	<time.h>
@@ -25,7 +25,7 @@
 	"init.c"
 	<pthread.h>
 
-1579559174 c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\prototypes.h
+1579722361 c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\prototypes.h
 	"structures.h"
 
 1579038060 c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\structures.h
@@ -244,19 +244,17 @@
 	"begin_code.h"
 	"close_code.h"
 
-1579554665 c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\init.c
+1579721145 c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\init.c
 	<stdlib.h>
 	<stdio.h>
-	<pthread.h>
 	<SDL/SDL.h>
 	<SDL/SDL_image.h>
 	<SDL/SDL_ttf.h>
 	<SDL/SDL_mixer.h>
 
-1579554665 source:c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\init.c
+1579721145 source:c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\init.c
 	<stdlib.h>
 	<stdio.h>
-	<pthread.h>
 	<SDL/SDL.h>
 	<SDL/SDL_image.h>
 	<SDL/SDL_ttf.h>

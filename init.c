@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <pthread.h>
+
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_ttf.h>
@@ -23,11 +23,12 @@ int currentFireBallPosition;
 
 
 int bottleCount ;
-SDL_Surface *screen ;
-
-pthread_t fireballsThread ;
+//SDL_Surface *screen ;
 
  Mix_Music *music ;
+ SDL_Surface *screen ;
+
+
 
 
 
