@@ -4,7 +4,7 @@ void pause() ;
 int menu(SDL_Surface *screen) ;
 int settings(SDL_Surface *screen) ;
 int enterYourName() ;
-int introduction() ;//Prenait screen avant
+int introduction() ;
 void getLevels(int levelChoice);
 void placeCharacter(int choice, int x, int y);
 void introDialog(int dialNumb) ;
@@ -15,6 +15,7 @@ void setSprite(int position, const char *sprite, ElementType elementType) ;
 
 void initControls();
 void getAudio(int choice);
+void play() ;
 
 void sananesAttacks();
 

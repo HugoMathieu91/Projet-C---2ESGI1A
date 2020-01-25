@@ -1,27 +1,15 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
-#include <time.h>
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
-#include <SDL/SDL_ttf.h>
-#include <SDL/SDL_mixer.h>
-#include <winsock.h>
-#include "prototypes.h"
-#include "constants.h"
+
+
+
 #include "init.c"
-#include <pthread.h>
-
-
-GridSquare board[144];
-//int bottleCount ;
-ImageToDisplay hero ;
 
 
 
 
 
 
+
+//To get audio, music as choice
 void getAudio(int choice)
 {
   //Mix_Music *music ;
@@ -31,10 +19,13 @@ void getAudio(int choice)
         music = Mix_LoadMUS("audio/mainMusic.mp3") ;
         break ;
   }
+  //1 to play the music 1 time , -1 for loop
   Mix_PlayMusic(music, 1) ;
 
 }
-void setFire()
+
+//Set fireSprites
+void setFireSprites()
 {
     fireSprites[0] =  "graphics/Fire1.png" ;
     fireSprites[1] =  "graphics/Fire2.png" ;
@@ -42,7 +33,7 @@ void setFire()
     fireSprites[3] =  "graphics/Fire4.png" ;
 }
 
-
+//Set hero sprites
 void setHeroSprites()
 {
     heroLeftSprites[0] = "graphics/GuyLeft1.png";
@@ -62,17 +53,18 @@ void setHeroSprites()
     heroDownSprites[2] = "graphics/GuyBot3.png";
 }
 
+//Set a fire line
 void setFireLine()
 {
-    int i ;
-    setFire() ;
-    for(i=36 ; i<=47 ; i++)
+    int firePos ;
+    setFireSprites() ;
+    for(firePos=36 ; firePos<=47 ; firePos++)
     {
-        setSprite(i, fireSprites[0], FIRE) ;
+        setSprite(firePos, fireSprites[0], FIRE) ;
     }
 }
 
-//Set a sprite on the game grid, arguments: current screen, position, elementType (see constants.h for enumeration)
+//Set a sprite on the game grid, arguments: current screen, position, elementType
 void setSprite(int position, const char *sprite, ElementType elementType)
 {
     //grid is 144 squares
@@ -99,6 +91,7 @@ void setSprite(int position, const char *sprite, ElementType elementType)
 void setNextSprite(int direction)
 {
     //==2 because we have 3 sprite in array (0,1,2)
+    //Si on change de direction ou qu'on est sur le dernier sprite alors on revient sur le premier sprite
     if(currentDirection != direction
             || currentCharacterSprite == 2)
     {
@@ -106,18 +99,20 @@ void setNextSprite(int direction)
     }
     else
     {
+        //Sinon le projet sprite s'affichera
         currentCharacterSprite++;
     }
 }
 
+//Get random int , in a range
 int getRandomValue(int lower, int upper)
 {
     srand(time(0));
-    // int i;
 
     while (1)
     {
         //random entre 0 (min position) et 143 (max position)
+        //Si le nombre choisi correspond a une position dans le tableau qui est déjà occupé alors on regenère un nombre
         int num = (rand() % (upper - lower + 1)) + lower;
         if(board[num].elementType == TABLE
                 || board[num].elementType == HERO
@@ -137,8 +132,11 @@ void generateGrid()
     int initialX = 0;
     int incrementalX = initialX;
     int incrementalY = 0;
+    //Utiliser les constantes ici
     int height = 50;
     int width = 50;
+
+    //On rempli board avec des carrés blancs
     for(int i=0; i < 144; i++)
     {
         board[i].image = IMG_Load("graphics/testGrid.png");
@@ -149,6 +147,7 @@ void generateGrid()
         ElementType type = NONE;
         board[i].elementType = type;
 
+        //Pour faire les lignes
         if(incrementalX < 11*width + initialX)
         {
             incrementalX+=width;
@@ -163,7 +162,9 @@ void generateGrid()
         SDL_FreeSurface(board[i].image) ;
     }
 }
-void play(SDL_Surface *screen)
+
+//Lancement de l'aventure !
+void play()
 {
     generateGrid(screen);
 
@@ -175,6 +176,10 @@ void play(SDL_Surface *screen)
 
     getLevels(1) ;
     setFireLine() ;
+      initControls() ;
+
+    //Reboucler en pollEvent pour animer le jeu ??
+
 
 
 
@@ -182,6 +187,7 @@ void play(SDL_Surface *screen)
 
 }
 
+//To move our hero
 void moveCharacter(SDL_Surface *screen, int direction)
 {
     //TODO: replace cases by enum.
@@ -190,10 +196,7 @@ void moveCharacter(SDL_Surface *screen, int direction)
     int desiredUpPosition = 0;
     int desiredDownPosition = 0;
 
-
-
-
-
+    //Bouger le score dans une fonction attitré
     char scorePlayer[10] ;
 
     SDL_Surface *score = NULL ;
@@ -362,18 +365,48 @@ void moveCharacter(SDL_Surface *screen, int direction)
     SDL_Flip(screen);
     SDL_FreeSurface(score) ;
 
-    if(bottleCount == 2)
-    {
-        sananesAttacks() ;
 
-    }
+
 }
+
+
 
 
 void sananesAttacks()
 {
+    int firePos ;
+    int i ;
 
-   int i ;
+        for(i = 0 ; i<= 6 ; i ++)
+        {
+           firePos = getRandomValue(48,143);
+            setSprite(firePos,fireSprites[0],FIRE) ;
+        }
+
+    /*int lastTime =0;
+    int actualTime =0;
+    actualTime = SDL_GetTicks() ;
+
+    int firePos = 41 ;
+
+
+        if(actualTime - lastTime > 3)
+        {
+            if(firePos<=113)
+            {
+            setSprite(firePos,"graphics/testGrid.png",NONE) ;
+            firePos+=12 ;
+            setSprite(firePos,fireSprites[0], FIRE) ;
+
+            }
+            else{
+
+            }
+            lastTime = actualTime ;
+        }*/
+
+
+  /* int i ;
    for (i =41 ; i<=113; i+=12)
    {
        setSprite(i, fireSprites[0],FIRE) ;
@@ -384,7 +417,7 @@ void sananesAttacks()
    {
        setSprite(i, "graphics/testGrid.png",NONE) ;
 
-   }
+   }*/
 
 
 
@@ -462,7 +495,7 @@ int menu(SDL_Surface *screen)
                 {
                 case 0:
                     introduction(screen);
-                    pause() ;
+                    //pause() ;
                     break;
                 case 1:
                     settings(screen);
@@ -650,10 +683,18 @@ int introduction()
                         else
                         {
 
-                            play(screen) ;
-                            initControls(screen) ;
+                            play() ;
 
-                            //sananesAttacks(screen) ;
+                               /* if(bottleCount % 2 == 0)
+                                    {
+
+
+                                        sananesAttacks() ;
+
+
+                                    }*/
+
+
                         }
                     }
                 }
@@ -851,7 +892,7 @@ void getLevels(int levelChoice)
 
         //CENTER TABLE RANK
         setSprite(65, "graphics/TableLeft.png", TABLE);
-        setSprite(6, "graphics/TableRight.png", TABLE);
+        setSprite(66, "graphics/TableRight.png", TABLE);
         setSprite(89, "graphics/TableLeft.png", TABLE);
         setSprite(90, "graphics/TableRight.png", TABLE);
         setSprite(113, "graphics/TableLeft.png", TABLE);
