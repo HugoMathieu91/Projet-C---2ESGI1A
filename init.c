@@ -2,13 +2,13 @@
 #include <stdio.h>
 #include <time.h>
 #include <winsock.h>
-
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_mixer.h>
 #include "constants.h"
 #include "prototypes.h"
+#include <pthread.h>
 
 
 const char *heroLeftSprites[3];
@@ -26,7 +26,7 @@ int currentCharacterPosition;
 int currentCharacterSprite;
 
 int currentFireSprite;
-int currentFireBallPosition;
+int fireBallPosition;
 
 
 int bottleCount ;

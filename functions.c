@@ -1,13 +1,4 @@
-
-
-
 #include "init.c"
-
-
-
-
-
-
 
 //To get audio, music as choice
 void getAudio(int choice)
@@ -23,6 +14,8 @@ void getAudio(int choice)
   Mix_PlayMusic(music, 1) ;
 
 }
+
+
 
 //Set fireSprites
 void setFireSprites()
@@ -132,30 +125,27 @@ void generateGrid()
     int initialX = 0;
     int incrementalX = initialX;
     int incrementalY = 0;
-    //Utiliser les constantes ici
-    int height = 50;
-    int width = 50;
 
     //On rempli board avec des carrés blancs
     for(int i=0; i < 144; i++)
     {
         board[i].image = IMG_Load("graphics/testGrid.png");
-        board[i].position.h = height;
-        board[i].position.w = width;
+        board[i].position.h = height_case;
+        board[i].position.w = width_case;
         board[i].position.x = incrementalX;
         board[i].position.y = incrementalY;
         ElementType type = NONE;
         board[i].elementType = type;
 
         //Pour faire les lignes
-        if(incrementalX < 11*width + initialX)
+        if(incrementalX < 11*width_case + initialX)
         {
-            incrementalX+=width;
+            incrementalX+=width_case;
         }
         else
         {
             incrementalX = initialX;
-            incrementalY += height;
+            incrementalY += height_case;
         }
         SDL_BlitSurface(board[i].image, NULL, screen, &board[i].position) ;
         SDL_Flip(screen);
@@ -163,29 +153,20 @@ void generateGrid()
     }
 }
 
-//Lancement de l'aventure !
-void play()
+
+
+
+Uint32 sananesAttacks(Uint32 interval, void *firePos)
 {
-    generateGrid(screen);
-
-    currentCharacterSprite = 0;
-    currentCharacterPosition = 71;
-    currentCharacterSprite = 0;
-
-    setHeroSprites();
-
-    getLevels(1) ;
-    setFireLine() ;
-      initControls() ;
-
-    //Reboucler en pollEvent pour animer le jeu ??
+    firePos+= 12 ;
 
 
-
-
-
+    return interval ;
 
 }
+
+
+
 
 //To move our hero
 void moveCharacter(SDL_Surface *screen, int direction)
@@ -372,56 +353,7 @@ void moveCharacter(SDL_Surface *screen, int direction)
 
 
 
-void sananesAttacks()
-{
-    int firePos ;
-    int i ;
 
-        for(i = 0 ; i<= 6 ; i ++)
-        {
-           firePos = getRandomValue(48,143);
-            setSprite(firePos,fireSprites[0],FIRE) ;
-        }
-
-    /*int lastTime =0;
-    int actualTime =0;
-    actualTime = SDL_GetTicks() ;
-
-    int firePos = 41 ;
-
-
-        if(actualTime - lastTime > 3)
-        {
-            if(firePos<=113)
-            {
-            setSprite(firePos,"graphics/testGrid.png",NONE) ;
-            firePos+=12 ;
-            setSprite(firePos,fireSprites[0], FIRE) ;
-
-            }
-            else{
-
-            }
-            lastTime = actualTime ;
-        }*/
-
-
-  /* int i ;
-   for (i =41 ; i<=113; i+=12)
-   {
-       setSprite(i, fireSprites[0],FIRE) ;
-
-   }
-
-   for (i =41 ; i<=101; i+=12)
-   {
-       setSprite(i, "graphics/testGrid.png",NONE) ;
-
-   }*/
-
-
-
-}
 
 
 
@@ -495,7 +427,6 @@ int menu(SDL_Surface *screen)
                 {
                 case 0:
                     introduction(screen);
-                    //pause() ;
                     break;
                 case 1:
                     settings(screen);
@@ -577,7 +508,7 @@ int settings(SDL_Surface* screen)
     int run = 1 ;
 
     SDL_WM_SetCaption("ESGI Adventure - Settings", NULL) ; //Nouvelle fenetre
-    screen = SDL_SetVideoMode(600,600,32,SDL_HWSURFACE) ;
+    screen = SDL_SetVideoMode(600,600,32,SDL_HWSURFACE|SDL_INIT_TIMER) ;
     settings = IMG_Load("graphics/settings.png") ;
     SDL_BlitSurface(settings,NULL,screen, &settingsPosition) ;
     SDL_Flip(screen) ; //maj de l'écran
@@ -609,25 +540,28 @@ int settings(SDL_Surface* screen)
 
         }
     }
-    //pause();
     SDL_FreeSurface(settings) ;
     return EXIT_SUCCESS ;
+}
+
+void initAudio()
+{
+     if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) //Initialisation de l'API Mixer
+   {
+      printf("%s", Mix_GetError());
+   }
 }
 
 int introduction()
 {
 
-    int repeat = 1 ;
     int dialNumber =  1 ;
-        int run = 1 ;
+    int run = 1 ;
 
     SDL_Event event;
-     //Nouvelle fenetre
+    //Nouvelle fenetre
      screen = SDL_SetVideoMode(600,600,32,SDL_HWSURFACE) ;
     SDL_WM_SetCaption("ESGI Adventure", NULL) ;
-
-
-
 
     getLevels(0) ;
      introDialog(0) ;
@@ -655,10 +589,6 @@ int introduction()
 
             case SDLK_RETURN:
 
-                while(repeat)
-                {
-                    SDL_WaitEvent(&event) ;
-
                     if(event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_RETURN)
                     {
                         if(dialNumber<3)
@@ -685,19 +615,9 @@ int introduction()
 
                             play() ;
 
-                               /* if(bottleCount % 2 == 0)
-                                    {
-
-
-                                        sananesAttacks() ;
-
-
-                                    }*/
-
-
                         }
                     }
-                }
+
                 break;
 
             default:
@@ -710,14 +630,38 @@ int introduction()
     return EXIT_SUCCESS ;
 }
 
-void initControls()
+void play()
 {
+
+     generateGrid();
+     int i ;
+
+    setHeroSprites();
+    currentCharacterSprite = 0;
+    currentCharacterPosition = 71;
+
+    getLevels(1) ;
+    setFireLine() ;
+
+    int firePos =41 ;
     int wait = 1 ;
     SDL_Event control;
+
+
+
 
     while(wait)
     {
         SDL_WaitEvent(&control) ;
+
+
+        if(bottleCount %2 == 1 && bottleCount< 25)
+        {
+             setSprite(firePos,"graphics/testGrid.png", NONE);
+            firePos =  getRandomValue(38,143);
+            setSprite(firePos, fireSprites[0], FIRE) ;
+
+        }
         switch(control.type)
         {
         case SDL_QUIT:
@@ -755,27 +699,29 @@ void initControls()
         default:
             break;
         }
+
     }
-
-
-
 }
 
+void initTTF()
+{
+     TTF_Init() ;
+     if ( TTF_Init() == -1 )
+    {
+        fprintf( stderr,"Problem with ttf loading: %s\n", SDL_GetError());
+        exit(EXIT_FAILURE);
+    }
+
+}
 
 
 //Appelle les dialogues durant l'introduction du jeu
 void introDialog(int dialNumb)
 {
-    TTF_Init() ;
-    if ( TTF_Init() == -1 )
-    {
-        fprintf( stderr,"Problem with ttf loading: %s\n", SDL_GetError());
-        //Note: Is this method usefull ?!
-        //pause() ;
-        exit(EXIT_FAILURE);
-    }
+    initTTF() ;
     TTF_Font *police = NULL;
     police = TTF_OpenFont("fonts/sixty.ttf", 20);
+
     SDL_Surface *dial = NULL ;
 
     SDL_Rect dialPosition ;
@@ -857,7 +803,6 @@ void placeCharacter(int choice, int x, int y)
     SDL_Flip(screen);
     SDL_FreeSurface(hero.image) ;
 }
-
 
 //Charger le niveau de notre choix
 void getLevels(int levelChoice)

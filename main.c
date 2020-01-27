@@ -18,14 +18,10 @@ int main(int argc, char *argv[])
 
     SDL_WM_SetCaption("ESGI Adventure", NULL) ;
     SDL_WM_SetIcon(IMG_Load("graphics/icon.bmp"), NULL) ; //NULL pour la transparence
-    firstScreen = SDL_SetVideoMode(width_window_x,height_window_y,32,SDL_HWSURFACE|SDL_DOUBLEBUF|SDL_INIT_TIMER) ;
+    firstScreen = SDL_SetVideoMode(width_window_x,height_window_y,32,SDL_HWSURFACE) ;
 
-    if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) //Initialisation de l'API Mixer
-   {
-      printf("%s", Mix_GetError());
-   }
-    /*SDL_Delay(3000) ;
-    return EXIT_SUCCESS ;*/
+   initAudio() ;
+
 
     menu(firstScreen);
     return 0 ;
