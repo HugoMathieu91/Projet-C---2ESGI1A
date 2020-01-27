@@ -17,6 +17,13 @@ const char *heroRightSprites[3];
 const char *heroDownSprites[3];
 const char *fireSprites[4] ;
 
+
+int bottleCount ;
+char scorePlayer[5] ;
+
+int lifeCount ;
+char lives[1] ;
+
 int currentDirection;
 GridSquare board[144];
 //int bottleCount ;
@@ -29,11 +36,14 @@ int currentFireSprite;
 int fireBallPosition;
 
 
-int bottleCount ;
+
 
 
  Mix_Music *music ;
  SDL_Surface *screen ;
+
+ SDL_Color color ;
+
 
 
 

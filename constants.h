@@ -8,6 +8,7 @@
 #define width_case 50
 #define height_case 50
 
+
 #define width_window_x format_case_x * width_case
 #define height_window_y format_case_y * height_case
 

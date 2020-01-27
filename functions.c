@@ -164,11 +164,82 @@ Uint32 sananesAttacks(Uint32 interval, void *firePos)
     return interval ;
 
 }
+void getLife()
+{
+
+    lifeCount = 0 ;
+
+    TTF_Font *police = NULL;
+
+    SDL_Surface *heart = NULL ;
+    SDL_Surface *remainingLifes ;
+
+    SDL_Rect heartPosition ;
+    heartPosition.x  = 75 ;
+    heartPosition.y = 25 ;
+
+    SDL_Rect remainingLifesPosition ;
+    remainingLifesPosition.x =  100 ;
+    remainingLifesPosition.y = 25 ;
 
 
 
+    color.r = 255;
+    color.g = 0 ;
+    color.b = 0 ;
 
-//To move our hero
+    police = TTF_OpenFont("fonts/sixty.ttf", 20);
+    setSprite(3,"graphics/testGrid.png", NONE);
+
+     heart = IMG_Load("graphics/life.png");
+
+     sprintf(lives, "%d", lifeCount) ;
+    remainingLifes = TTF_RenderText_Blended(police, lives, color);
+
+
+    SDL_BlitSurface(heart, NULL, screen, &heartPosition) ;
+    SDL_BlitSurface(remainingLifes,NULL,screen,&remainingLifesPosition ) ;
+
+    SDL_Flip(screen) ;
+
+}
+void getScore()
+{
+    TTF_Font *police = NULL;
+
+    SDL_Surface *champagne = NULL ;
+    SDL_Surface *score = NULL ;
+
+    SDL_Rect champagnePosition ;
+    champagnePosition.x =  25 ;
+    champagnePosition.y = 25 ;
+
+    SDL_Rect scorePosition ;
+    scorePosition.x = 50 ;
+    scorePosition.y = 25 ;
+
+    color.r = 255;
+    color.g = 0 ;
+    color.b = 0 ;
+
+    police = TTF_OpenFont("fonts/sixty.ttf", 20);
+    setSprite(1,"graphics/testGrid.png", NONE);
+
+    champagne = IMG_Load("graphics/ScoreBottle.png") ;
+
+    sprintf(scorePlayer, "%d", bottleCount) ;
+    score = TTF_RenderText_Blended(police, scorePlayer, color);
+
+
+    SDL_BlitSurface(score, NULL, screen, &scorePosition) ;
+    SDL_BlitSurface(champagne, NULL, screen, &champagnePosition) ;
+
+    SDL_Flip(screen);
+
+}
+
+
+//To move our hero - a corriger car inutile de prendre le screen
 void moveCharacter(SDL_Surface *screen, int direction)
 {
     //TODO: replace cases by enum.
@@ -178,23 +249,6 @@ void moveCharacter(SDL_Surface *screen, int direction)
     int desiredDownPosition = 0;
 
     //Bouger le score dans une fonction attitré
-    char scorePlayer[10] ;
-
-    SDL_Surface *score = NULL ;
-    TTF_Font *police = NULL;
-
-    police = TTF_OpenFont("fonts/sixty.ttf", 20);
-
-    SDL_Rect scorePosition ;
-    scorePosition.x = 25 ;
-    scorePosition.y = 25 ;
-
-    SDL_Color color ;
-    color.r = 255;
-    color.g = 0 ;
-    color.b = 0 ;
-
-    setSprite(0,"graphics/testGrid.png", NONE);
     switch(direction)
     {
 
@@ -339,12 +393,9 @@ void moveCharacter(SDL_Surface *screen, int direction)
     }
     currentDirection = direction;
 
-    sprintf(scorePlayer, "%d", bottleCount) ;
-    score = TTF_RenderText_Blended(police, scorePlayer, color);
-
-    SDL_BlitSurface(score, NULL, screen, &scorePosition) ;
     SDL_Flip(screen);
-    SDL_FreeSurface(score) ;
+
+
 
 
 
@@ -643,25 +694,25 @@ void play()
     getLevels(1) ;
     setFireLine() ;
 
-    int firePos =41 ;
+    int firePos[5]  = {145} ; //En dehors du tableau pour commencer la boucle plus bas
     int wait = 1 ;
     SDL_Event control;
-
-
-
 
     while(wait)
     {
         SDL_WaitEvent(&control) ;
 
-
         if(bottleCount %2 == 1 && bottleCount< 25)
         {
-             setSprite(firePos,"graphics/testGrid.png", NONE);
-            firePos =  getRandomValue(38,143);
-            setSprite(firePos, fireSprites[0], FIRE) ;
-
+            for(i = 0 ; i<5 ; i++)
+            {
+                setSprite(firePos[i],"graphics/testGrid.png", NONE);
+                firePos[i] = getRandomValue(38,143);
+                setSprite(firePos[i], fireSprites[0], FIRE) ;
+            }
         }
+
+
         switch(control.type)
         {
         case SDL_QUIT:
@@ -699,6 +750,8 @@ void play()
         default:
             break;
         }
+        getScore() ;
+        getLife();
 
     }
 }

@@ -1,0 +1,32 @@
+[33mcommit 6fbebcef143b67cc767876b64c1d76202126b2e1[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Hugo MATHIEU <hugo_mathieu@hotmail.fr>
+Date:   Wed Jan 22 20:52:28 2020 +0100
+
+    Modification des arguments des fonctions du jeu : la majorité d'entre elles prenaient un SDL_Surface *screen en arguments, ce n'est plus le cas car *screen est desormais accessible globalement. Occurences modifiées,aucun problème a signaler.
+
+[33mcommit b23f8b9115d7ac79b584aa240ccb880a87de7a45[m
+Author: Hugo MATHIEU <hugo_mathieu@hotmail.fr>
+Date:   Mon Jan 20 23:51:59 2020 +0100
+
+     -Possibilité de quitter le jeu en cours de partie
+    -Déplacement de music dans les variables globales
+    -Déplacement de SDL_Surface *screen dans les variables globales
+
+[33mcommit 58e174032cc1709d42403e2fcc28ebcc63234007[m
+Author: Hugo MATHIEU <hugo_mathieu@hotmail.fr>
+Date:   Sun Jan 19 20:18:16 2020 +0100
+
+    Audio creation : main music
+    Starting to work on boss attacks.
+
+[33mcommit 72f2f0bb4187ffd13045f5fe24eaf8005446e0f5[m
+Author: Hugo MATHIEU <hugo_mathieu@hotmail.fr>
+Date:   Sat Jan 18 23:14:22 2020 +0100
+
+    Modify function getRandomValue : add BOTTLE elementType case
+
+[33mcommit 9f7c2e1897234b1dc5fb696e5e96153da169c3c4[m
+Author: Hugo MATHIEU <hugo_mathieu@hotmail.fr>
+Date:   Sat Jan 18 23:05:27 2020 +0100
+
+    First commit
