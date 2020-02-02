@@ -22,7 +22,7 @@ int bottleCount ;
 char scorePlayer[5] ;
 
 int lifeCount ;
-char lives[1] ;
+char lives[2] ;
 
 int currentDirection;
 GridSquare board[144];

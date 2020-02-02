@@ -156,23 +156,13 @@ void generateGrid()
 
 
 
-Uint32 sananesAttacks(Uint32 interval, void *firePos)
-{
-    firePos+= 12 ;
 
-
-    return interval ;
-
-}
 void getLife()
 {
-
-    lifeCount = 0 ;
-
     TTF_Font *police = NULL;
 
     SDL_Surface *heart = NULL ;
-    SDL_Surface *remainingLifes ;
+    SDL_Surface *remainingLifes = NULL;
 
     SDL_Rect heartPosition ;
     heartPosition.x  = 75 ;
@@ -182,14 +172,12 @@ void getLife()
     remainingLifesPosition.x =  100 ;
     remainingLifesPosition.y = 25 ;
 
-
-
     color.r = 255;
     color.g = 0 ;
     color.b = 0 ;
 
     police = TTF_OpenFont("fonts/sixty.ttf", 20);
-    setSprite(3,"graphics/testGrid.png", NONE);
+    setSprite(2,"graphics/testGrid.png", NONE);
 
      heart = IMG_Load("graphics/life.png");
 
@@ -248,10 +236,8 @@ void moveCharacter(SDL_Surface *screen, int direction)
     int desiredUpPosition = 0;
     int desiredDownPosition = 0;
 
-    //Bouger le score dans une fonction attitré
     switch(direction)
     {
-
     //left
     case 0:
 
@@ -270,8 +256,9 @@ void moveCharacter(SDL_Surface *screen, int direction)
 
         if(board[desiredLeftPosition].elementType == FIRE)
         {
-            setSprite(currentCharacterPosition, heroLeftSprites[currentCharacterSprite], HERO);
-            return;
+            //setSprite(currentCharacterPosition, heroLeftSprites[currentCharacterSprite], HERO);
+            lifeCount-- ;
+            //return;
         }
 
         if(board[desiredLeftPosition].elementType == BOTTLE)
@@ -288,6 +275,7 @@ void moveCharacter(SDL_Surface *screen, int direction)
         setNextSprite(direction);
         setSprite(desiredLeftPosition, heroLeftSprites[currentCharacterSprite], HERO);
         break;
+
     case 1:
         desiredUpPosition = currentCharacterPosition - 12;
         if(desiredUpPosition < 0)
@@ -304,8 +292,9 @@ void moveCharacter(SDL_Surface *screen, int direction)
 
         if(board[desiredUpPosition].elementType == FIRE)
         {
-            setSprite(currentCharacterPosition, heroUpSprites[currentCharacterSprite], HERO);
-            return;
+            //setSprite(currentCharacterPosition, heroUpSprites[currentCharacterSprite], HERO);
+            lifeCount-- ;
+            //return;
         }
 
         if(board[desiredUpPosition].elementType == BOTTLE)
@@ -313,9 +302,6 @@ void moveCharacter(SDL_Surface *screen, int direction)
             int value = getRandomValue(48,143);
             setSprite(value, "graphics/bottle.png", BOTTLE);
             bottleCount++ ;
-
-
-
         }
 
         setSprite(currentCharacterPosition,"graphics/testGrid.png", NONE);
@@ -324,6 +310,7 @@ void moveCharacter(SDL_Surface *screen, int direction)
         setNextSprite(direction);
         setSprite(currentCharacterPosition, heroUpSprites[currentCharacterSprite], HERO);
         break;
+
     case 2:
         if(((int)currentCharacterPosition + 1) % 12 == 0)
         {
@@ -339,8 +326,9 @@ void moveCharacter(SDL_Surface *screen, int direction)
 
         if(board[desiredRightPosition].elementType == FIRE)
         {
-            setSprite(currentCharacterPosition, heroRightSprites[currentCharacterSprite], HERO);
-            return;
+            //setSprite(currentCharacterPosition, heroRightSprites[currentCharacterSprite], HERO);
+            //return;
+            lifeCount-- ;
         }
 
 
@@ -372,8 +360,9 @@ void moveCharacter(SDL_Surface *screen, int direction)
 
         if(board[desiredDownPosition].elementType == FIRE)
         {
-            setSprite(currentCharacterPosition, heroDownSprites[currentCharacterSprite], HERO);
-            return;
+            //setSprite(currentCharacterPosition, heroDownSprites[currentCharacterSprite], HERO);
+            //return;
+            lifeCount-- ;
         }
 
         if(board[desiredDownPosition].elementType == BOTTLE)
@@ -381,10 +370,8 @@ void moveCharacter(SDL_Surface *screen, int direction)
             int value = getRandomValue(48,143);
             setSprite(value, "graphics/bottle.png", BOTTLE);
             bottleCount++ ;
-
-            //Technique pour ttf un int
-
         }
+
         setSprite(currentCharacterPosition,"graphics/testGrid.png", NONE);
         currentCharacterPosition = desiredDownPosition;
         setNextSprite(direction);
@@ -394,20 +381,7 @@ void moveCharacter(SDL_Surface *screen, int direction)
     currentDirection = direction;
 
     SDL_Flip(screen);
-
-
-
-
-
 }
-
-
-
-
-
-
-
-
 
 
 int menu(SDL_Surface *screen)
@@ -683,13 +657,14 @@ int introduction()
 
 void play()
 {
-
      generateGrid();
      int i ;
 
     setHeroSprites();
     currentCharacterSprite = 0;
     currentCharacterPosition = 71;
+    lifeCount = 3 ;
+
 
     getLevels(1) ;
     setFireLine() ;
@@ -826,10 +801,6 @@ void introDialog(int dialNumb)
 //Placer un personnage sur le screen (utiliser dans l'introduction seulement)
 void placeCharacter(int choice, int x, int y)
 {
-
-    // Character hero ;
-    //hero.heroImage = NULL;
-
     SDL_Rect position ;
     position.x = x  ;
     position.y = y ;
