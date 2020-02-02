@@ -9,13 +9,43 @@ void getAudio(int choice)
     case 0:
         music = Mix_LoadMUS("audio/mainMusic.mp3") ;
         break ;
+
+    case 1:
+        music = Mix_LoadMUS("audio/gameOver.mp3")  ;
+        break ;
+
+    case 2:
+        music = Mix_LoadMUS("audio/dead.mp3") ;
+        break ;
+
+    default :
+        break ;
   }
   //1 to play the music 1 time , -1 for loop
-  Mix_PlayMusic(music, 1) ;
+  Mix_PlayMusic(music, -1) ;
 
 }
 
+/*void getSound(int choice)
+{
 
+    switch(choice)
+    {
+    case 0:
+        sound = Mix_LoadWAV("audio/pain.wav") ;
+        Mix_VolumeChunk(sound, MIX_MAX_VOLUME/2);
+
+        break;
+
+    default:
+        break;
+
+    }
+      Mix_VolumeChunk(sound, MIX_MAX_VOLUME/2); //Mettre un volume pour ce wav
+     Mix_PlayChannel(1, sound, 0);
+     Mix_FreeChunk(sound) ;
+     //Mix_PlayMusic(sound, 1) ;
+}*/
 
 //Set fireSprites
 void setFireSprites()
@@ -154,9 +184,6 @@ void generateGrid()
 }
 
 
-
-
-
 void getLife()
 {
     TTF_Font *police = NULL;
@@ -165,11 +192,11 @@ void getLife()
     SDL_Surface *remainingLifes = NULL;
 
     SDL_Rect heartPosition ;
-    heartPosition.x  = 75 ;
+    heartPosition.x  = 125 ;
     heartPosition.y = 25 ;
 
     SDL_Rect remainingLifesPosition ;
-    remainingLifesPosition.x =  100 ;
+    remainingLifesPosition.x =  150 ;
     remainingLifesPosition.y = 25 ;
 
     color.r = 255;
@@ -177,7 +204,7 @@ void getLife()
     color.b = 0 ;
 
     police = TTF_OpenFont("fonts/sixty.ttf", 20);
-    setSprite(2,"graphics/testGrid.png", NONE);
+    setSprite(3,"graphics/testGrid.png", NONE);
 
      heart = IMG_Load("graphics/life.png");
 
@@ -189,6 +216,9 @@ void getLife()
     SDL_BlitSurface(remainingLifes,NULL,screen,&remainingLifesPosition ) ;
 
     SDL_Flip(screen) ;
+
+    SDL_FreeSurface(heart) ;
+    SDL_FreeSurface(remainingLifes) ;
 
 }
 void getScore()
@@ -224,9 +254,27 @@ void getScore()
 
     SDL_Flip(screen);
 
+    SDL_FreeSurface(champagne) ;
+    SDL_FreeSurface(score) ;
+
 }
 
+void deathAnimation()
+{
+    int i  ;
 
+    for(i= 0 ; i <= 12 ; i++)
+    {
+        setSprite(currentCharacterPosition,heroDownSprites[0], HERO) ;
+        SDL_Delay(50) ;
+        setSprite(currentCharacterPosition, heroLeftSprites[0], HERO) ;
+        SDL_Delay(50) ;
+        setSprite(currentCharacterPosition, heroUpSprites[0], HERO) ;
+        SDL_Delay(50) ;
+        setSprite(currentCharacterPosition, heroRightSprites[0] ,HERO) ;
+        SDL_Delay(50) ;
+    }
+}
 //To move our hero - a corriger car inutile de prendre le screen
 void moveCharacter(SDL_Surface *screen, int direction)
 {
@@ -257,6 +305,7 @@ void moveCharacter(SDL_Surface *screen, int direction)
         if(board[desiredLeftPosition].elementType == FIRE)
         {
             //setSprite(currentCharacterPosition, heroLeftSprites[currentCharacterSprite], HERO);
+
             lifeCount-- ;
             //return;
         }
@@ -294,6 +343,7 @@ void moveCharacter(SDL_Surface *screen, int direction)
         {
             //setSprite(currentCharacterPosition, heroUpSprites[currentCharacterSprite], HERO);
             lifeCount-- ;
+
             //return;
         }
 
@@ -328,6 +378,7 @@ void moveCharacter(SDL_Surface *screen, int direction)
         {
             //setSprite(currentCharacterPosition, heroRightSprites[currentCharacterSprite], HERO);
             //return;
+
             lifeCount-- ;
         }
 
@@ -362,6 +413,7 @@ void moveCharacter(SDL_Surface *screen, int direction)
         {
             //setSprite(currentCharacterPosition, heroDownSprites[currentCharacterSprite], HERO);
             //return;
+
             lifeCount-- ;
         }
 
@@ -575,8 +627,34 @@ void initAudio()
    {
       printf("%s", Mix_GetError());
    }
+
+   //Mix_AllocateChannels(1) ;
 }
 
+
+void gameOver()
+{
+
+    getAudio(1)  ;
+
+
+    SDL_Surface *gameOver = NULL ;
+    SDL_Rect gameOverPos ;
+
+    gameOverPos.x = 0 ;
+    gameOverPos.y = 0 ;
+
+    gameOver = IMG_Load("graphics/gameOver.jpg") ;
+     SDL_BlitSurface(gameOver, NULL, screen, &gameOverPos) ;
+
+     SDL_Flip(screen) ;
+
+     SDL_FreeSurface(gameOver) ;
+     SDL_Delay(7000) ;
+
+
+
+}
 int introduction()
 {
 
@@ -639,6 +717,7 @@ int introduction()
                         {
 
                             play() ;
+                            //run =0 ;
 
                         }
                     }
@@ -725,8 +804,24 @@ void play()
         default:
             break;
         }
-        getScore() ;
         getLife();
+        getScore() ;
+
+         if(lifeCount == 0 )
+        {
+            getAudio(2) ;
+            deathAnimation() ;
+            //SDL_Delay(3000) ;
+            gameOver() ;
+            Mix_FreeMusic(music) ;
+            Mix_CloseAudio();
+            menu(screen) ;
+
+
+           //wait = 0 ;
+            //menu(screen) ;
+        }
+
 
     }
 }
