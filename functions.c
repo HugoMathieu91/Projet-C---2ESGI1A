@@ -554,7 +554,6 @@ int menu(SDL_Surface *screen)
         default:
             break ;
         }
-
         SDL_BlitSurface(imageMenu,NULL,screen,&imageMenuPosition) ;
         SDL_BlitSurface(champagneSelect,NULL,screen,&champagneSelectPosition) ;
         SDL_Flip(screen) ;
