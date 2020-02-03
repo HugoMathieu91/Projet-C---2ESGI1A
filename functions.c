@@ -26,27 +26,6 @@ void getAudio(int choice)
 
 }
 
-/*void getSound(int choice)
-{
-
-    switch(choice)
-    {
-    case 0:
-        sound = Mix_LoadWAV("audio/pain.wav") ;
-        Mix_VolumeChunk(sound, MIX_MAX_VOLUME/2);
-
-        break;
-
-    default:
-        break;
-
-    }
-      Mix_VolumeChunk(sound, MIX_MAX_VOLUME/2); //Mettre un volume pour ce wav
-     Mix_PlayChannel(1, sound, 0);
-     Mix_FreeChunk(sound) ;
-     //Mix_PlayMusic(sound, 1) ;
-}*/
-
 //Set fireSprites
 void setFireSprites()
 {
@@ -85,6 +64,33 @@ void setFireLine()
     {
         setSprite(firePos, fireSprites[0], FIRE) ;
     }
+}
+
+void gamebreak1()
+{
+
+    int i  ;
+   introDialog(4) ;
+
+   SDL_Delay(2000) ;
+   for(i = 12 ; i <=16 ; i++)
+   {
+       setSprite(i ,"graphics/testGrid.png", NONE) ;
+   }
+   introDialog(5) ;
+    SDL_Delay(2000) ;
+   for(i = 12 ; i <=16 ; i++)
+   {
+       setSprite(i ,"graphics/testGrid.png", NONE) ;
+   }
+
+    introDialog(6) ;
+    SDL_Delay(2000) ;
+   for(i = 12 ; i <=16 ; i++)
+   {
+       setSprite(i ,"graphics/testGrid.png", NONE) ;
+   }
+
 }
 
 //Set a sprite on the game grid, arguments: current screen, position, elementType
@@ -219,7 +225,6 @@ void getLife()
 
     SDL_FreeSurface(heart) ;
     SDL_FreeSurface(remainingLifes) ;
-
 }
 void getScore()
 {
@@ -304,10 +309,7 @@ void moveCharacter(SDL_Surface *screen, int direction)
 
         if(board[desiredLeftPosition].elementType == FIRE)
         {
-            //setSprite(currentCharacterPosition, heroLeftSprites[currentCharacterSprite], HERO);
-
             lifeCount-- ;
-            //return;
         }
 
         if(board[desiredLeftPosition].elementType == BOTTLE)
@@ -319,7 +321,6 @@ void moveCharacter(SDL_Surface *screen, int direction)
         }
 
         setSprite(currentCharacterPosition, "graphics/testGrid.png", NONE);
-
         currentCharacterPosition = desiredLeftPosition;
         setNextSprite(direction);
         setSprite(desiredLeftPosition, heroLeftSprites[currentCharacterSprite], HERO);
@@ -338,13 +339,9 @@ void moveCharacter(SDL_Surface *screen, int direction)
             return;
         }
 
-
         if(board[desiredUpPosition].elementType == FIRE)
         {
-            //setSprite(currentCharacterPosition, heroUpSprites[currentCharacterSprite], HERO);
             lifeCount-- ;
-
-            //return;
         }
 
         if(board[desiredUpPosition].elementType == BOTTLE)
@@ -355,7 +352,6 @@ void moveCharacter(SDL_Surface *screen, int direction)
         }
 
         setSprite(currentCharacterPosition,"graphics/testGrid.png", NONE);
-
         currentCharacterPosition = desiredUpPosition;
         setNextSprite(direction);
         setSprite(currentCharacterPosition, heroUpSprites[currentCharacterSprite], HERO);
@@ -376,12 +372,8 @@ void moveCharacter(SDL_Surface *screen, int direction)
 
         if(board[desiredRightPosition].elementType == FIRE)
         {
-            //setSprite(currentCharacterPosition, heroRightSprites[currentCharacterSprite], HERO);
-            //return;
-
             lifeCount-- ;
         }
-
 
         if(board[desiredRightPosition].elementType == BOTTLE)
         {
@@ -411,9 +403,6 @@ void moveCharacter(SDL_Surface *screen, int direction)
 
         if(board[desiredDownPosition].elementType == FIRE)
         {
-            //setSprite(currentCharacterPosition, heroDownSprites[currentCharacterSprite], HERO);
-            //return;
-
             lifeCount-- ;
         }
 
@@ -466,8 +455,6 @@ int menu(SDL_Surface *screen)
     if ( imageMenu == NULL )
     {
         fprintf( stderr,"Problem with image loading: %s\n", SDL_GetError());
-        //Note: Is this method usefull ?!
-        //pause() ;
         exit(EXIT_FAILURE);
     }
 
@@ -513,8 +500,6 @@ int menu(SDL_Surface *screen)
 
                     SDL_FreeSurface(imageMenu) ;
                     SDL_FreeSurface(champagneSelect) ;
-                    //SDL_Quit() ;
-
                     exit(EXIT_SUCCESS) ;
                     break ;
 
@@ -632,8 +617,6 @@ void initAudio()
    {
       printf("%s", Mix_GetError());
    }
-
-   //Mix_AllocateChannels(1) ;
 }
 
 
@@ -641,8 +624,6 @@ void gameOver()
 {
 
     getAudio(1)  ;
-
-
     SDL_Surface *gameOver = NULL ;
     SDL_Rect gameOverPos ;
 
@@ -753,7 +734,6 @@ void play()
     bottleCount = 0 ;
     lifeCount = 3 ;
 
-
     getLevels(1) ;
     setFireLine() ;
 
@@ -765,7 +745,7 @@ void play()
     {
         SDL_WaitEvent(&control) ;
 
-        if(bottleCount %2 == 1 && bottleCount< 25)
+        if(bottleCount %2 == 1 && bottleCount< 15)//<15
         {
             for(i = 0 ; i<5 ; i++)
             {
@@ -775,6 +755,13 @@ void play()
             }
         }
 
+        if(bottleCount == 3 )
+        {
+            gamebreak1() ;
+
+            //Pour sortir de la condition sinon jeu bloqué..
+           bottleCount++ ;
+        }
 
         switch(control.type)
         {
@@ -782,7 +769,6 @@ void play()
             exit(EXIT_SUCCESS) ;
             wait = 0 ;
             break ;
-
 
         case SDL_KEYDOWN:
             switch(control.key.keysym.sym)
@@ -813,6 +799,7 @@ void play()
         default:
             break;
         }
+
         getLife();
         getScore() ;
 
@@ -822,13 +809,10 @@ void play()
             deathAnimation() ;
             break ;
        }
-
-
     }
      gameOver() ;
      Mix_FreeMusic(music) ;
      Mix_CloseAudio();
-    // menu(screen) ;
 }
 
 void initTTF()
@@ -839,7 +823,6 @@ void initTTF()
         fprintf( stderr,"Problem with ttf loading: %s\n", SDL_GetError());
         exit(EXIT_FAILURE);
     }
-
 }
 
 
@@ -847,20 +830,17 @@ void initTTF()
 void introDialog(int dialNumb)
 {
     initTTF() ;
+
     TTF_Font *police = NULL;
     police = TTF_OpenFont("fonts/sixty.ttf", 20);
 
     SDL_Surface *dial = NULL ;
-
     SDL_Rect dialPosition ;
 
     SDL_Color color ;
     color.r = 255;
     color.g = 0 ;
     color.b = 0 ;
-
-
-
 
     switch(dialNumb)
     {
@@ -886,6 +866,25 @@ void introDialog(int dialNumb)
         dial = TTF_RenderText_Blended(police, "COMMENT ? Allez me chercher du champagne TOUT DE SUITE !!", color);
         dialPosition.x = 25 ;
         dialPosition.y = 25 ;
+        break ;
+
+    case 4:
+        dial = TTF_RenderText_Blended(police, "Hmmm c'est bien bon!", color);
+        dialPosition.x = 25 ;
+        dialPosition.y = 50 ;
+        break ;
+
+    case 5:
+        police = TTF_OpenFont("fonts/sixty.ttf", 15);
+        dial = TTF_RenderText_Blended(police, "Mais! Cette bouteille est bouchonnée! ", color);
+        dialPosition.x = 25 ;
+        dialPosition.y = 50 ;
+        break ;
+
+    case 6:
+        dial = TTF_RenderText_Blended(police, "COMMENT OSEZ-VOUS?? ", color);
+        dialPosition.x = 25 ;
+        dialPosition.y = 50 ;
         break ;
 
     default:
@@ -977,7 +976,6 @@ void getLevels(int levelChoice)
 
         //BOSS
         setSprite(5, "graphics/angryboss.png", BOSS);
-
 
     default:
         break ;

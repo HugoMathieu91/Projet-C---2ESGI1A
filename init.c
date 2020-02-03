@@ -8,15 +8,12 @@
 #include <SDL/SDL_mixer.h>
 #include "constants.h"
 #include "prototypes.h"
-#include <pthread.h>
-
 
 const char *heroLeftSprites[3];
 const char *heroUpSprites[3];
 const char *heroRightSprites[3];
 const char *heroDownSprites[3];
 const char *fireSprites[4] ;
-
 
 int bottleCount ;
 char scorePlayer[5] ;
@@ -34,10 +31,6 @@ int currentCharacterSprite;
 
 int currentFireSprite;
 int fireBallPosition;
-
-
-
-
 
  Mix_Music *music ;
  Mix_Chunk *sound ;
