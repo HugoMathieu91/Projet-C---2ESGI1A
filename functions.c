@@ -661,6 +661,7 @@ void gameOver()
 }
 int introduction()
 {
+    initAudio() ;
 
     int dialNumber =  1 ;
     int run = 1 ;

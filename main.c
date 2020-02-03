@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     SDL_WM_SetIcon(IMG_Load("graphics/icon.bmp"), NULL) ; //NULL pour la transparence
     firstScreen = SDL_SetVideoMode(width_window_x,height_window_y,32,SDL_HWSURFACE) ;
 
-   initAudio() ;
+
 
 
     menu(firstScreen);
