@@ -559,6 +559,8 @@ int menu(SDL_Surface *screen)
         SDL_BlitSurface(champagneSelect,NULL,screen,&champagneSelectPosition) ;
         SDL_Flip(screen) ;
     }
+    //Sinon warning control reaches end of non-void function
+    return 1 ;
 }
 
 void pause()
@@ -737,6 +739,8 @@ int introduction()
     //On est encore dans le while du menu à ce niveau là. Sans réappeler le menu le jeu se termine ici et on ne peux pas refaire une partie sans relancer le jeu.
     //Une erreur apparait quand on quitte le jeu après plusieurs parties enchainées, je pense que cela vient d'ici car on ne quitte pas certaines boucles proprement.
     menu(screen) ;
+    //Sinon warning control reaches end of non-void function
+    return 1 ;
 }
 
 void play()
