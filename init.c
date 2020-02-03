@@ -26,7 +26,7 @@ char lives[2] ;
 
 int currentDirection;
 GridSquare board[144];
-//int bottleCount ;
+
 ImageToDisplay hero ;
 
 int currentCharacterPosition;

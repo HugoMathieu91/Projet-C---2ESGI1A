@@ -747,6 +747,7 @@ void play()
     setHeroSprites();
     currentCharacterSprite = 0;
     currentCharacterPosition = 71;
+    bottleCount = 0 ;
     lifeCount = 3 ;
 
 
