@@ -438,7 +438,6 @@ void moveCharacter(SDL_Surface *screen, int direction)
 
 int menu(SDL_Surface *screen)
 {
-
     SDL_Surface *imageMenu = NULL;
     SDL_Surface *champagneSelect = NULL ;
 
@@ -503,11 +502,22 @@ int menu(SDL_Surface *screen)
                 switch(currentPosition)
                 {
                 case 0:
+                    //run = 0 ;
                     introduction(screen);
                     break;
                 case 1:
                     settings(screen);
                     break;
+
+                case 2:
+
+                    SDL_FreeSurface(imageMenu) ;
+                    SDL_FreeSurface(champagneSelect) ;
+                    //SDL_Quit() ;
+
+                    exit(EXIT_SUCCESS) ;
+                    break ;
+
                 default:
                     break;
                 }
@@ -548,13 +558,7 @@ int menu(SDL_Surface *screen)
         SDL_BlitSurface(imageMenu,NULL,screen,&imageMenuPosition) ;
         SDL_BlitSurface(champagneSelect,NULL,screen,&champagneSelectPosition) ;
         SDL_Flip(screen) ;
-
     }
-    SDL_Flip(screen) ;
-    SDL_FreeSurface(imageMenu) ;
-    SDL_FreeSurface(champagneSelect) ;
-    SDL_Quit() ;
-    return EXIT_SUCCESS ;
 }
 
 void pause()
@@ -715,13 +719,10 @@ int introduction()
 
                         else
                         {
-
                             play() ;
-                            //run =0 ;
-
+                            run =0 ;
                         }
                     }
-
                 break;
 
             default:
@@ -731,7 +732,10 @@ int introduction()
             break ;
         }
     }
-    return EXIT_SUCCESS ;
+
+    //On est encore dans le while du menu à ce niveau là. Sans réappeler le menu le jeu se termine ici et on ne peux pas refaire une partie sans relancer le jeu.
+    //Une erreur apparait quand on quitte le jeu après plusieurs parties enchainées, je pense que cela vient d'ici car on ne quitte pas certaines boucles proprement.
+    menu(screen) ;
 }
 
 void play()
@@ -811,19 +815,15 @@ void play()
         {
             getAudio(2) ;
             deathAnimation() ;
-            //SDL_Delay(3000) ;
-            gameOver() ;
-            Mix_FreeMusic(music) ;
-            Mix_CloseAudio();
-            menu(screen) ;
-
-
-           //wait = 0 ;
-            //menu(screen) ;
-        }
+            break ;
+       }
 
 
     }
+     gameOver() ;
+     Mix_FreeMusic(music) ;
+     Mix_CloseAudio();
+    // menu(screen) ;
 }
 
 void initTTF()
