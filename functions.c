@@ -17,6 +17,9 @@ void getAudio(int choice)
     case 2:
         music = Mix_LoadMUS("audio/dead.mp3") ;
         break ;
+    case 3:
+        music = Mix_LoadMUS("audio/kyrie.mp3") ;
+        break ;
 
     default :
         break ;
@@ -187,6 +190,7 @@ void sananesDestruction()
 
 
     SDL_Delay(50);
+    getAudio(3) ;
     setSprite(18, "graphics/testGrid.png",NONE);
     setSprite(18, "graphics/diplome.png",NONE) ;
 
@@ -924,12 +928,26 @@ void play()
         {
             getAudio(2) ;
             deathAnimation() ;
+            gameOver() ;
+            break ;
+       }
+
+       if(board[18].elementType == HERO)
+       {
+
+            successScreen() ;
             break ;
        }
     }
-     gameOver() ;
+
      Mix_FreeMusic(music) ;
      Mix_CloseAudio();
+}
+
+void successScreen()
+{
+    setSprite(0, "graphics/success.png", NONE ) ;
+    SDL_Delay(5000) ;
 }
 
 void initTTF()

@@ -33,7 +33,6 @@ int currentFireSprite;
 int fireBallPosition;
 
  Mix_Music *music ;
- Mix_Chunk *sound ;
  SDL_Surface *screen ;
 
  SDL_Color color ;

@@ -16,6 +16,7 @@ void play() ;
 void setFireLine() ;
 void setSprite(int position, const char *sprite, ElementType elementType) ;
 int settings(SDL_Surface *screen) ;
+void successScreen() ;
 
 
 
