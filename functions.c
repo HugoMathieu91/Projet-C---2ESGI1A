@@ -92,36 +92,21 @@ void setFireLine()
 
 void gamebreak1()
 {
-
     int i  ;
     int j  ;
-   introDialog(4) ;
-
-   SDL_Delay(2000) ;
-   for(i = 12 ; i <=16 ; i++)
-   {
-       setSprite(i ,"graphics/testGrid.png", NONE) ;
-   }
-   introDialog(5) ;
-    SDL_Delay(2000) ;
-   for(i = 12 ; i <=16 ; i++)
-   {
-       setSprite(i ,"graphics/testGrid.png", NONE) ;
-   }
-
-    introDialog(6) ;
-    SDL_Delay(2000) ;
-
-   for(i = 12 ; i <=16 ; i++)
-   {
-       setSprite(i ,"graphics/testGrid.png", NONE) ;
-   }
-
-   //int i ;
+    int k ;
     int firePos ;
     int maxPos ;
 
-
+   for(k = 4 ; k <=6 ; k++)
+   {
+       introDialog(k) ;
+       SDL_Delay(2000) ;
+        for(i = 12 ; i <=16 ; i++)
+       {
+           setSprite(i ,"graphics/testGrid.png", NONE) ;
+       }
+   }
 
     for(j = 0  ; j <=5 ; j++)
     {
@@ -130,48 +115,81 @@ void gamebreak1()
 
         for(i = firePos  ; i <= maxPos; i+=12)
         {
-             SDL_Delay(50);
-
-            if(board[i].elementType != BOTTLE || board[i].elementType != HERO)
+            SDL_Delay(50);
+            if(board[i].elementType != BOTTLE && board[i].elementType != HERO)
                 setSprite(i, fireSprites[0], FIRE);
-
         }
 
         for(i = firePos ; i<= maxPos -12 ; i+=12)
         {
-            if(board[i].elementType != BOTTLE || board[i].elementType != HERO)
+            if(board[i].elementType != BOTTLE && board[i].elementType != HERO)
                 setSprite(i, "graphics/testGrid.png", NONE) ;
         }
     }
-
 }
 
 void endGame()
 {
-
+     int j  ;
      int i  ;
+     int firePos ;
 
-   introDialog(7) ;
-
-   SDL_Delay(2000) ;
-   for(i = 12 ; i <=16 ; i++)
+   for(j = 7 ; j<=9 ; j++)
    {
-       setSprite(i ,"graphics/testGrid.png", NONE) ;
-   }
-   introDialog(8) ;
-    SDL_Delay(2000) ;
-   for(i = 12 ; i <=16 ; i++)
-   {
-       setSprite(i ,"graphics/testGrid.png", NONE) ;
+       introDialog(j) ;
+       SDL_Delay(1500) ;
+        for(i = 12 ; i <=16 ; i++)
+       {
+           setSprite(i ,"graphics/testGrid.png", NONE) ;
+       }
    }
 
-    introDialog(9) ;
-    SDL_Delay(2000) ;
+   for(firePos=36 ; firePos<=47 ; firePos++)
+    {
+        SDL_Delay(50);
+        setSprite(firePos, "graphics/testGrid.png", NONE) ;
+    }
 
-   for(i = 12 ; i <=16 ; i++)
-   {
-       setSprite(i ,"graphics/testGrid.png", NONE) ;
-   }
+
+}
+
+void sananesDestruction()
+{
+    int firePos ;
+    setSprite(5 , fireSprites[0], FIRE ) ;
+    SDL_Delay(50);
+    setSprite(7 , fireSprites[0], FIRE ) ;
+    SDL_Delay(50);
+    setSprite(18 , fireSprites[0], FIRE ) ;
+    SDL_Delay(50);
+    setSprite(29 , fireSprites[0], FIRE ) ;
+    SDL_Delay(50);
+    setSprite(31 , fireSprites[0], FIRE ) ;
+    SDL_Delay(50);
+    setSprite(17 , fireSprites[0], FIRE ) ;
+    SDL_Delay(50);
+    setSprite(19 , fireSprites[0], FIRE ) ;
+    SDL_Delay(50);
+    setSprite(6 , fireSprites[0], FIRE ) ;
+    SDL_Delay(50);
+    setSprite(30 , fireSprites[0], FIRE ) ;
+
+    introDialog(10) ;
+    SDL_Delay(1000) ;
+
+    for(firePos=39 ; firePos<=47 ; firePos++)
+    {
+        SDL_Delay(50);
+        setSprite(firePos, "graphics/testGrid.png", NONE) ;
+    }
+
+    setSprite(30, "graphics/testGrid.png", NONE);
+
+
+    SDL_Delay(50);
+    setSprite(18, "graphics/testGrid.png",NONE);
+    setSprite(18, "graphics/diplome.png",NONE) ;
+
 
 }
 
@@ -855,9 +873,10 @@ void play()
             }
         }
 
-        if(bottleCount == 10)
+        if(bottleCount == 6)
         {
             endGame() ;
+            sananesDestruction() ;
             bottleCount++ ;
         }
 
@@ -986,7 +1005,7 @@ void introDialog(int dialNumb)
         break ;
 
     case 7:
-        dial = TTF_RenderText_Blended(police, "Ca suffit !", color);
+        dial = TTF_RenderText_Blended(police, "Ca suffit!", color);
         dialPosition.x = 25 ;
         dialPosition.y = 50 ;
         break ;
@@ -1000,9 +1019,15 @@ void introDialog(int dialNumb)
 
     case 9:
         police = TTF_OpenFont("fonts/sixty.ttf", 15);
-        dial = TTF_RenderText_Blended(police, "Je ne me sens pas très bien..." ,color);
+        dial = TTF_RenderText_Blended(police, "Je ne me sens pas tres bien..." ,color);
         dialPosition.x = 25 ;
         dialPosition.y = 50 ;
+        break ;
+
+     case 10:
+        dial = TTF_RenderText_Blended(police, "AAARGH! ON SE RETROUVERA !" ,color);
+        dialPosition.x = 250 ;
+        dialPosition.y = 150 ;
         break ;
 
 
