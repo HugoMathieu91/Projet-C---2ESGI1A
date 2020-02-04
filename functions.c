@@ -55,13 +55,37 @@ void setHeroSprites()
     heroDownSprites[2] = "graphics/GuyBot3.png";
 }
 
+void sananesFireball()
+{
+    int i ;
+    int firePos ;
+    int maxPos ;
+
+    firePos = getRandomValue(48,60) ;
+    maxPos =  firePos + (5 * 12) ;  //Pour 5 lignes
+
+    for(i = firePos  ; i <= maxPos; i+=12)
+    {
+         //SDL_Delay(50);
+
+        setSprite(i, fireSprites[0], FIRE);
+
+    }
+    for(i = firePos ; i<= maxPos -12 ; i+=12)
+    {
+        setSprite(i, "graphics/testGrid.png", NONE) ;
+    }
+}
 //Set a fire line
 void setFireLine()
 {
     int firePos ;
+
+    //Bouger setFireSprites ailleurs ? (on utilise d'ailleurs qu'un seul sprite dans le jeu... )
     setFireSprites() ;
     for(firePos=36 ; firePos<=47 ; firePos++)
     {
+        SDL_Delay(50);
         setSprite(firePos, fireSprites[0], FIRE) ;
     }
 }
@@ -70,6 +94,7 @@ void gamebreak1()
 {
 
     int i  ;
+    int j  ;
    introDialog(4) ;
 
    SDL_Delay(2000) ;
@@ -86,10 +111,35 @@ void gamebreak1()
 
     introDialog(6) ;
     SDL_Delay(2000) ;
+
    for(i = 12 ; i <=16 ; i++)
    {
        setSprite(i ,"graphics/testGrid.png", NONE) ;
    }
+
+   //int i ;
+    int firePos ;
+    int maxPos ;
+
+
+
+    for(j = 0  ; j <=5 ; j++)
+    {
+         firePos = getRandomValue(48,61) ;
+        maxPos =  firePos + (5 * 12) ;  //Pour 5 lignes
+
+        for(i = firePos  ; i <= maxPos; i+=12)
+        {
+             SDL_Delay(50);
+
+            setSprite(i, fireSprites[0], FIRE);
+
+        }
+        for(i = firePos ; i<= maxPos -12 ; i+=12)
+        {
+            setSprite(i, "graphics/testGrid.png", NONE) ;
+        }
+    }
 
 }
 
@@ -755,12 +805,22 @@ void play()
             }
         }
 
-        if(bottleCount == 3 )
+        if(bottleCount == 7 )
         {
             gamebreak1() ;
-
+            //sananesFireball() ;
             //Pour sortir de la condition sinon jeu bloqué..
            bottleCount++ ;
+        }
+
+         if(bottleCount %2 == 1 && bottleCount> 15)
+        {
+            for(i = 0 ; i<7 ; i++)
+            {
+                setSprite(firePos[i],"graphics/testGrid.png", NONE);
+                firePos[i] = getRandomValue(38,143);
+                setSprite(firePos[i], fireSprites[0], FIRE) ;
+            }
         }
 
         switch(control.type)

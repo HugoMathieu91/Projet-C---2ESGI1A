@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1580742428 source:c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\main.c
+1580746423 source:c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\main.c
 	<stdio.h>
 	<stdlib.h>
 	<time.h>
@@ -10,10 +10,10 @@
 	"constants.h"
 	"prototypes.h"
 
-1580742035 source:c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\functions.c
+1580827232 source:c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\functions.c
 	"init.c"
 
-1580734975 c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\prototypes.h
+1580758221 c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\prototypes.h
 	"structures.h"
 
 1579038060 c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\structures.h
@@ -232,7 +232,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1580734398 c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\init.c
+1580746423 c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\init.c
 	<stdlib.h>
 	<stdio.h>
 	<time.h>
@@ -243,9 +243,8 @@
 	<SDL/SDL_mixer.h>
 	"constants.h"
 	"prototypes.h"
-	<pthread.h>
 
-1580743829 source:c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\init.c
+1580746423 source:c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\init.c
 	<stdlib.h>
 	<stdio.h>
 	<time.h>
