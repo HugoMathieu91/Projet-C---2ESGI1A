@@ -132,14 +132,46 @@ void gamebreak1()
         {
              SDL_Delay(50);
 
-            setSprite(i, fireSprites[0], FIRE);
+            if(board[i].elementType != BOTTLE || board[i].elementType != HERO)
+                setSprite(i, fireSprites[0], FIRE);
 
         }
+
         for(i = firePos ; i<= maxPos -12 ; i+=12)
         {
-            setSprite(i, "graphics/testGrid.png", NONE) ;
+            if(board[i].elementType != BOTTLE || board[i].elementType != HERO)
+                setSprite(i, "graphics/testGrid.png", NONE) ;
         }
     }
+
+}
+
+void endGame()
+{
+
+     int i  ;
+
+   introDialog(7) ;
+
+   SDL_Delay(2000) ;
+   for(i = 12 ; i <=16 ; i++)
+   {
+       setSprite(i ,"graphics/testGrid.png", NONE) ;
+   }
+   introDialog(8) ;
+    SDL_Delay(2000) ;
+   for(i = 12 ; i <=16 ; i++)
+   {
+       setSprite(i ,"graphics/testGrid.png", NONE) ;
+   }
+
+    introDialog(9) ;
+    SDL_Delay(2000) ;
+
+   for(i = 12 ; i <=16 ; i++)
+   {
+       setSprite(i ,"graphics/testGrid.png", NONE) ;
+   }
 
 }
 
@@ -787,7 +819,7 @@ void play()
     getLevels(1) ;
     setFireLine() ;
 
-    int firePos[5]  = {145} ; //En dehors du tableau pour commencer la boucle plus bas
+    int firePos[11]  = {145} ; //En dehors du tableau pour commencer la boucle plus bas
     int wait = 1 ;
     SDL_Event control;
 
@@ -795,7 +827,7 @@ void play()
     {
         SDL_WaitEvent(&control) ;
 
-        if(bottleCount %2 == 1 && bottleCount< 15)//<15
+        if(bottleCount %2 == 1 && bottleCount< 5)//<15
         {
             for(i = 0 ; i<5 ; i++)
             {
@@ -805,22 +837,28 @@ void play()
             }
         }
 
-        if(bottleCount == 7 )
+        if(bottleCount == 3 )
         {
             gamebreak1() ;
-            //sananesFireball() ;
+
             //Pour sortir de la condition sinon jeu bloqué..
            bottleCount++ ;
         }
 
-         if(bottleCount %2 == 1 && bottleCount> 15)
+         if( bottleCount>5)
         {
-            for(i = 0 ; i<7 ; i++)
+            for(i = 0 ; i<10 ; i++)
             {
                 setSprite(firePos[i],"graphics/testGrid.png", NONE);
                 firePos[i] = getRandomValue(38,143);
                 setSprite(firePos[i], fireSprites[0], FIRE) ;
             }
+        }
+
+        if(bottleCount == 10)
+        {
+            endGame() ;
+            bottleCount++ ;
         }
 
         switch(control.type)
@@ -946,6 +984,27 @@ void introDialog(int dialNumb)
         dialPosition.x = 25 ;
         dialPosition.y = 50 ;
         break ;
+
+    case 7:
+        dial = TTF_RenderText_Blended(police, "Ca suffit !", color);
+        dialPosition.x = 25 ;
+        dialPosition.y = 50 ;
+        break ;
+
+    case 8:
+        police = TTF_OpenFont("fonts/sixty.ttf", 15);
+        dial = TTF_RenderText_Blended(police, "Donnez moi toutes ces bouteilles ", color);
+        dialPosition.x = 25 ;
+        dialPosition.y = 50 ;
+        break ;
+
+    case 9:
+        police = TTF_OpenFont("fonts/sixty.ttf", 15);
+        dial = TTF_RenderText_Blended(police, "Je ne me sens pas très bien..." ,color);
+        dialPosition.x = 25 ;
+        dialPosition.y = 50 ;
+        break ;
+
 
     default:
         break ;
