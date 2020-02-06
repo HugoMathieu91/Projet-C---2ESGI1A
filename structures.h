@@ -1,6 +1,6 @@
 typedef enum {BAS,HAUT,GAUCHE,DROITE} Direction;
 
-typedef enum {NONE, HERO, BOSS, TABLE, BOTTLE, FIRE} ElementType;
+typedef enum {NONE, HERO, BOSS, TABLE, BOTTLE, FIRE, LIFE} ElementType;
 
 typedef struct imageToDiplay
 {

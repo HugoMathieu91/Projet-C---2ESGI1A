@@ -251,7 +251,8 @@ int getRandomValue(int lower, int upper)
                 || board[num].elementType == HERO
                 || board[num].elementType == BOSS
                 || board[num].elementType == BOTTLE
-                || board[num].elementType ==FIRE)
+                || board[num].elementType == FIRE
+                || board[num].elementType == LIFE)
         {
             continue;
         }
@@ -293,7 +294,23 @@ void generateGrid()
     }
 }
 
+void generateLife()
+{
 
+    int upper  = 101 ;
+    int lower  = 0 ;
+    int luckyNumber ;
+    int position  ;
+
+    srand(time(0));
+    luckyNumber = (rand() % (upper - lower + 1)) + lower;
+    position = getRandomValue(48, 143) ;
+
+    if(luckyNumber<= 33 && lifeCount <= 5 )
+    {
+        setSprite(position, "graphics/life.png", LIFE) ;
+    }
+}
 void getLife()
 {
     TTF_Font *police = NULL;
@@ -424,6 +441,11 @@ void moveCharacter(SDL_Surface *screen, int direction)
             bottleCount++ ;
         }
 
+        if(board[desiredLeftPosition].elementType == LIFE)
+        {
+            lifeCount++ ;
+        }
+
         setSprite(currentCharacterPosition, "graphics/testGrid.png", NONE);
         currentCharacterPosition = desiredLeftPosition;
         setNextSprite(direction);
@@ -455,6 +477,11 @@ void moveCharacter(SDL_Surface *screen, int direction)
             bottleCount++ ;
         }
 
+         if(board[desiredUpPosition].elementType == LIFE)
+        {
+            lifeCount++ ;
+        }
+
         setSprite(currentCharacterPosition,"graphics/testGrid.png", NONE);
         currentCharacterPosition = desiredUpPosition;
         setNextSprite(direction);
@@ -477,6 +504,11 @@ void moveCharacter(SDL_Surface *screen, int direction)
         if(board[desiredRightPosition].elementType == FIRE)
         {
             lifeCount-- ;
+        }
+
+         if(board[desiredRightPosition].elementType == LIFE)
+        {
+            lifeCount++ ;
         }
 
         if(board[desiredRightPosition].elementType == BOTTLE)
@@ -515,6 +547,11 @@ void moveCharacter(SDL_Surface *screen, int direction)
             int value = getRandomValue(48,143);
             setSprite(value, "graphics/bottle.png", BOTTLE);
             bottleCount++ ;
+        }
+
+         if(board[desiredDownPosition].elementType == LIFE)
+        {
+            lifeCount++ ;
         }
 
         setSprite(currentCharacterPosition,"graphics/testGrid.png", NONE);
@@ -849,6 +886,8 @@ void play()
     {
         SDL_WaitEvent(&control) ;
 
+
+
         if(bottleCount %2 == 1 && bottleCount< 5)//<15
         {
             for(i = 0 ; i<5 ; i++)
@@ -922,6 +961,7 @@ void play()
         }
 
         getLife();
+        generateLife() ;
         getScore() ;
 
          if(lifeCount == 0 )
@@ -934,7 +974,6 @@ void play()
 
        if(board[18].elementType == HERO)
        {
-
             successScreen() ;
             break ;
        }
