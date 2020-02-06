@@ -20,7 +20,7 @@ char scorePlayer[5] ;
 
 int lifeCount ;
 char lives[2] ;
-int lifeCountTemp ;
+
 
 int currentDirection;
 GridSquare board[144];

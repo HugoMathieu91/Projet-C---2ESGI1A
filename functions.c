@@ -296,8 +296,7 @@ void generateGrid()
 
 void generateLife()
 {
-
-    int upper  = 101 ;
+    int upper  = 100 ;
     int lower  = 0 ;
     int luckyNumber ;
     int position  ;
@@ -306,7 +305,7 @@ void generateLife()
     luckyNumber = (rand() % (upper - lower + 1)) + lower;
     position = getRandomValue(48, 143) ;
 
-    if(luckyNumber<= 33 && lifeCount <= 5 )
+    if(luckyNumber<8)
     {
         setSprite(position, "graphics/life.png", LIFE) ;
     }
@@ -508,7 +507,7 @@ void moveCharacter(SDL_Surface *screen, int direction)
 
          if(board[desiredRightPosition].elementType == LIFE)
         {
-            lifeCount++ ;
+            lifeCount++ ;;
         }
 
         if(board[desiredRightPosition].elementType == BOTTLE)
@@ -869,11 +868,14 @@ void play()
      generateGrid();
      int i ;
 
+
     setHeroSprites();
     currentCharacterSprite = 0;
     currentCharacterPosition = 71;
     bottleCount = 0 ;
     lifeCount = 3 ;
+
+
 
     getLevels(1) ;
     setFireLine() ;
@@ -888,7 +890,7 @@ void play()
 
 
 
-        if(bottleCount %2 == 1 && bottleCount< 5)//<15
+        if( bottleCount< 10)//<15
         {
             for(i = 0 ; i<5 ; i++)
             {
@@ -898,15 +900,15 @@ void play()
             }
         }
 
-        if(bottleCount == 3 )
+        if(bottleCount == 9 )
         {
             gamebreak1() ;
 
-            //Pour sortir de la condition sinon jeu bloqué..
+            //Pour sortir de la condition sinon jeu bloqué...
            bottleCount++ ;
         }
 
-         if( bottleCount>5)
+         if( bottleCount>10 && bottleCount <19)
         {
             for(i = 0 ; i<10 ; i++)
             {
@@ -916,7 +918,7 @@ void play()
             }
         }
 
-        if(bottleCount == 6)
+        if(bottleCount == 19)
         {
             endGame() ;
             sananesDestruction() ;
@@ -951,19 +953,26 @@ void play()
             case SDLK_DOWN:
                 moveCharacter(screen, 3);
                 break ;
+
             default:
                 break;
             }
             break ;
+
+
 
         default:
             break;
         }
 
         getLife();
-        generateLife() ;
+
         getScore() ;
 
+        if(lifeCount <5)
+        {
+            generateLife() ;
+        }
          if(lifeCount == 0 )
         {
             getAudio(2) ;
