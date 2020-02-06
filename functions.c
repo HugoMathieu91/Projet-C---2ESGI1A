@@ -1,6 +1,6 @@
 #include "init.c"
 
-//To get audio, music as choice
+//Fonction pour charger une musique
 void getAudio(int choice)
 {
   //Mix_Music *music ;
@@ -29,7 +29,7 @@ void getAudio(int choice)
 
 }
 
-//Set fireSprites
+//Set fireSprites - unfortunately all sprites are not used...
 void setFireSprites()
 {
     fireSprites[0] =  "graphics/Fire1.png" ;
@@ -58,6 +58,8 @@ void setHeroSprites()
     heroDownSprites[2] = "graphics/GuyBot3.png";
 }
 
+
+//Utilisée dans la fonction gameBreak - affiche des jets de flammes
 void sananesFireball()
 {
     int i ;
@@ -65,7 +67,7 @@ void sananesFireball()
     int maxPos ;
 
     firePos = getRandomValue(48,60) ;
-    maxPos =  firePos + (5 * 12) ;  //Pour 5 lignes
+    maxPos =  firePos + (5 * 12) ;  //Pour 5 x 12  pour déplacer le feu de 5 cases vers le bas max
 
     for(i = firePos  ; i <= maxPos; i+=12)
     {
@@ -908,7 +910,7 @@ void play()
            bottleCount++ ;
         }
 
-         if( bottleCount>10 && bottleCount <19)
+         if( bottleCount>=10 && bottleCount <19)
         {
             for(i = 0 ; i<10 ; i++)
             {
