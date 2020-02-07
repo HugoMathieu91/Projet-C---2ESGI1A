@@ -59,7 +59,7 @@ void setHeroSprites()
 }
 
 
-//Utilisée dans la fonction gameBreak - affiche des jets de flammes
+/*
 void sananesFireball()
 {
     int i ;
@@ -80,12 +80,13 @@ void sananesFireball()
     {
         setSprite(i, "graphics/testGrid.png", NONE) ;
     }
-}
+}*/
+
+
 //Set a fire line
 void setFireLine()
 {
     int firePos ;
-
     //Bouger setFireSprites ailleurs ? (on utilise d'ailleurs qu'un seul sprite dans le jeu... )
     setFireSprites() ;
     for(firePos=36 ; firePos<=47 ; firePos++)
@@ -95,6 +96,7 @@ void setFireLine()
     }
 }
 
+//Petit animation en milieu de jeu
 void gamebreak1()
 {
     int i  ;
@@ -103,6 +105,7 @@ void gamebreak1()
     int firePos ;
     int maxPos ;
 
+    //On affiche des dialogues
    for(k = 4 ; k <=6 ; k++)
    {
        introDialog(k) ;
@@ -113,10 +116,11 @@ void gamebreak1()
        }
    }
 
+   //Des jet de flammes apparaissent
     for(j = 0  ; j <=5 ; j++)
     {
          firePos = getRandomValue(48,61) ;
-        maxPos =  firePos + (5 * 12) ;  //Pour 5 lignes
+        maxPos =  firePos + (5 * 12) ;  //Pour 5 cases vers le bas maximum (1 ligne = 12 cases)
 
         for(i = firePos  ; i <= maxPos; i+=12)
         {
@@ -133,6 +137,7 @@ void gamebreak1()
     }
 }
 
+//Fonction appelée quand le joueur a ramassé assez de bouteilles
 void endGame()
 {
      int j  ;
@@ -158,6 +163,7 @@ void endGame()
 
 }
 
+//Destruction du boss
 void sananesDestruction()
 {
     int firePos ;
@@ -189,8 +195,6 @@ void sananesDestruction()
     }
 
     setSprite(30, "graphics/testGrid.png", NONE);
-
-
     SDL_Delay(50);
     getAudio(3) ;
     setSprite(18, "graphics/testGrid.png",NONE);
@@ -199,7 +203,7 @@ void sananesDestruction()
 
 }
 
-//Set a sprite on the game grid, arguments: current screen, position, elementType
+//Set a sprite on the game grid
 void setSprite(int position, const char *sprite, ElementType elementType)
 {
     //grid is 144 squares
@@ -239,7 +243,7 @@ void setNextSprite(int direction)
     }
 }
 
-//Get random int , in a range
+//Get random int , in a range, take board elements in consideration
 int getRandomValue(int lower, int upper)
 {
     srand(time(0));
@@ -296,6 +300,7 @@ void generateGrid()
     }
 }
 
+//Generer les vies sur le board
 void generateLife()
 {
     int upper  = 100 ;
@@ -307,16 +312,21 @@ void generateLife()
     luckyNumber = (rand() % (upper - lower + 1)) + lower;
     position = getRandomValue(48, 143) ;
 
-    if(luckyNumber<8)
+    //7% de chance qu'une vie apparaisse
+    if(luckyNumber<7)
     {
         setSprite(position, "graphics/life.png", LIFE) ;
     }
 }
+
+//Fonction gérant le compteur de vies
 void getLife()
 {
     TTF_Font *police = NULL;
 
+    //L'image de coeur
     SDL_Surface *heart = NULL ;
+    //Le compteur
     SDL_Surface *remainingLifes = NULL;
 
     SDL_Rect heartPosition ;
@@ -336,9 +346,9 @@ void getLife()
 
      heart = IMG_Load("graphics/life.png");
 
+     //Obligé de mettre dans lives (char lives[2]) car SDL_TTF ne peut afficher que des char
      sprintf(lives, "%d", lifeCount) ;
     remainingLifes = TTF_RenderText_Blended(police, lives, color);
-
 
     SDL_BlitSurface(heart, NULL, screen, &heartPosition) ;
     SDL_BlitSurface(remainingLifes,NULL,screen,&remainingLifesPosition ) ;
@@ -348,6 +358,8 @@ void getLife()
     SDL_FreeSurface(heart) ;
     SDL_FreeSurface(remainingLifes) ;
 }
+
+//Compteur de bouteilles - Même principe que getLife()
 void getScore()
 {
     TTF_Font *police = NULL;
@@ -386,6 +398,7 @@ void getScore()
 
 }
 
+//Animation de mort du personnage
 void deathAnimation()
 {
     int i  ;
@@ -402,10 +415,11 @@ void deathAnimation()
         SDL_Delay(50) ;
     }
 }
+
 //To move our hero - a corriger car inutile de prendre le screen
 void moveCharacter(SDL_Surface *screen, int direction)
 {
-    //TODO: replace cases by enum.
+    //position voulues
     int desiredLeftPosition = 0;
     int desiredRightPosition = 0;
     int desiredUpPosition = 0;
@@ -417,12 +431,13 @@ void moveCharacter(SDL_Surface *screen, int direction)
     case 0:
 
         if((int)currentCharacterPosition - 1 < 0
-                || (int)currentCharacterPosition % 12 == 0)
+                || (int)currentCharacterPosition % 12 == 0)//ou si on est a la limite de notre board
         {
             return;
         }
 
         desiredLeftPosition = currentCharacterPosition -1;
+
         if(board[desiredLeftPosition].elementType == TABLE)
         {
             setSprite(currentCharacterPosition, heroLeftSprites[0], HERO);
@@ -436,7 +451,7 @@ void moveCharacter(SDL_Surface *screen, int direction)
 
         if(board[desiredLeftPosition].elementType == BOTTLE)
         {
-            //TODO Create method (function for noob) to setBottlePosition.
+            //On génére un nouvelle bouteille
             int value = getRandomValue(48,143);
             setSprite(value, "graphics/bottle.png", BOTTLE);
             bottleCount++ ;
@@ -453,6 +468,7 @@ void moveCharacter(SDL_Surface *screen, int direction)
         setSprite(desiredLeftPosition, heroLeftSprites[currentCharacterSprite], HERO);
         break;
 
+    //Up
     case 1:
         desiredUpPosition = currentCharacterPosition - 12;
         if(desiredUpPosition < 0)
@@ -489,6 +505,7 @@ void moveCharacter(SDL_Surface *screen, int direction)
         setSprite(currentCharacterPosition, heroUpSprites[currentCharacterSprite], HERO);
         break;
 
+    //Right
     case 2:
         if(((int)currentCharacterPosition + 1) % 12 == 0)
         {
@@ -525,6 +542,7 @@ void moveCharacter(SDL_Surface *screen, int direction)
         setSprite(desiredRightPosition, heroRightSprites[currentCharacterSprite], HERO);
         break;
 
+    //Down
     case 3:
         desiredDownPosition = currentCharacterPosition + 12;
         if(desiredDownPosition > 143)
@@ -566,7 +584,7 @@ void moveCharacter(SDL_Surface *screen, int direction)
     SDL_Flip(screen);
 }
 
-
+//Fonction gérant le menu
 int menu(SDL_Surface *screen)
 {
     SDL_Surface *imageMenu = NULL;
@@ -705,6 +723,8 @@ void pause()
     }
 }
 
+//Page des settings - a améliorer avec setSprite
+
 int settings(SDL_Surface* screen)
 {
     SDL_Surface *settings = NULL ;
@@ -753,15 +773,17 @@ int settings(SDL_Surface* screen)
     return EXIT_SUCCESS ;
 }
 
+//Pour initialiser SDL_mixer
 void initAudio()
 {
      if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) //Initialisation de l'API Mixer
    {
-      printf("%s", Mix_GetError());
+      fprintf(stderr, "problem with SDL_Mixer : %s\n  ", Mix_GetError());
    }
 }
 
 
+//Ecran game over
 void gameOver()
 {
 
@@ -779,10 +801,9 @@ void gameOver()
 
      SDL_FreeSurface(gameOver) ;
      SDL_Delay(7000) ;
-
-
-
 }
+
+//Fonction qui gère l'introduction du jeu
 int introduction()
 {
     initAudio() ;
@@ -796,7 +817,8 @@ int introduction()
     SDL_WM_SetCaption("ESGI Adventure", NULL) ;
 
     getLevels(0) ;
-     introDialog(0) ;
+    introDialog(0) ;
+
     while(run)
     {
         SDL_WaitEvent(&event) ;
@@ -809,7 +831,7 @@ int introduction()
             run =0 ;
             break ;
 
-
+            //Quand on appuie sur une touche
         case SDL_KEYDOWN:
             switch(event.key.keysym.sym)
             {
@@ -859,26 +881,24 @@ int introduction()
     }
 
     //On est encore dans le while du menu à ce niveau là. Sans réappeler le menu le jeu se termine ici et on ne peux pas refaire une partie sans relancer le jeu.
-    //Une erreur apparait quand on quitte le jeu après plusieurs parties enchainées, je pense que cela vient d'ici car on ne quitte pas certaines boucles proprement.
+
     menu(screen) ;
     //Sinon warning control reaches end of non-void function
     return 1 ;
 }
 
+//Fonction de jeu
 void play()
 {
-     generateGrid();
      int i ;
 
-
-    setHeroSprites();
     currentCharacterSprite = 0;
     currentCharacterPosition = 71;
     bottleCount = 0 ;
     lifeCount = 3 ;
 
-
-
+    generateGrid();
+    setHeroSprites();
     getLevels(1) ;
     setFireLine() ;
 
@@ -890,9 +910,7 @@ void play()
     {
         SDL_WaitEvent(&control) ;
 
-
-
-        if( bottleCount< 10)//<15
+        if( bottleCount< 10)
         {
             for(i = 0 ; i<5 ; i++)
             {
@@ -905,7 +923,6 @@ void play()
         if(bottleCount == 9 )
         {
             gamebreak1() ;
-
             //Pour sortir de la condition sinon jeu bloqué...
            bottleCount++ ;
         }
@@ -919,7 +936,7 @@ void play()
                 setSprite(firePos[i], fireSprites[0], FIRE) ;
             }
         }
-
+        //Fin de jeu ici
         if(bottleCount == 19)
         {
             endGame() ;
@@ -961,21 +978,19 @@ void play()
             }
             break ;
 
-
-
         default:
             break;
         }
 
         getLife();
-
         getScore() ;
 
-        if(lifeCount <5)
+        if(lifeCount <3)
         {
             generateLife() ;
         }
-         if(lifeCount == 0 )
+
+        if(lifeCount == 0 )
         {
             getAudio(2) ;
             deathAnimation() ;
@@ -994,12 +1009,14 @@ void play()
      Mix_CloseAudio();
 }
 
+//Ecran de fin de jeu
 void successScreen()
 {
     setSprite(0, "graphics/success.png", NONE ) ;
     SDL_Delay(5000) ;
 }
 
+//Initialiser SDL_TTF
 void initTTF()
 {
      TTF_Init() ;
@@ -1061,7 +1078,7 @@ void introDialog(int dialNumb)
 
     case 5:
         police = TTF_OpenFont("fonts/sixty.ttf", 15);
-        dial = TTF_RenderText_Blended(police, "Mais! Cette bouteille est bouchonnée! ", color);
+        dial = TTF_RenderText_Blended(police, "Mais! Cette bouteille est bouchonnee! ", color);
         dialPosition.x = 25 ;
         dialPosition.y = 50 ;
         break ;
@@ -1118,7 +1135,7 @@ void placeCharacter(int choice, int x, int y)
     switch(choice)
     {
     case 0:
-        //character = IMG_Load("graphics/boss.png") ;
+        //remplacer avec setSprite, faire un algo pour calculer le N° de case avec x et y
         hero.image = IMG_Load("graphics/boss.png") ;
         break ;
 
