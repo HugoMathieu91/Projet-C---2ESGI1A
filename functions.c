@@ -69,7 +69,8 @@ void setFireLine()
     for(firePos=36 ; firePos<=47 ; firePos++)
     {
         SDL_Delay(50);
-        setSprite(firePos, fireSprites[0], FIRE) ;
+        //On met TABLE en elementType, comme ça le joueur ne peut pas traverser la ligne de feu
+        setSprite(firePos, fireSprites[0], TABLE) ;
     }
 }
 
