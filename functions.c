@@ -59,29 +59,6 @@ void setHeroSprites()
 }
 
 
-/*
-void sananesFireball()
-{
-    int i ;
-    int firePos ;
-    int maxPos ;
-
-    firePos = getRandomValue(48,60) ;
-    maxPos =  firePos + (5 * 12) ;  //Pour 5 x 12  pour déplacer le feu de 5 cases vers le bas max
-
-    for(i = firePos  ; i <= maxPos; i+=12)
-    {
-         //SDL_Delay(50);
-
-        setSprite(i, fireSprites[0], FIRE);
-
-    }
-    for(i = firePos ; i<= maxPos -12 ; i+=12)
-    {
-        setSprite(i, "graphics/testGrid.png", NONE) ;
-    }
-}*/
-
 
 //Set a fire line
 void setFireLine()
@@ -100,10 +77,7 @@ void setFireLine()
 void gamebreak1()
 {
     int i  ;
-    int j  ;
     int k ;
-    int firePos ;
-    int maxPos ;
 
     //On affiche des dialogues
    for(k = 4 ; k <=6 ; k++)
@@ -116,7 +90,8 @@ void gamebreak1()
        }
    }
 
-   //Des jet de flammes apparaissent
+   /*
+   //Des jet de flammes apparaissent - n'est plus utilisé car provoque des ralentissement sur certains PC
     for(j = 0  ; j <=5 ; j++)
     {
          firePos = getRandomValue(48,61) ;
@@ -134,7 +109,7 @@ void gamebreak1()
             if(board[i].elementType != BOTTLE && board[i].elementType != HERO)
                 setSprite(i, "graphics/testGrid.png", NONE) ;
         }
-    }
+    }*/
 }
 
 //Fonction appelée quand le joueur a ramassé assez de bouteilles
