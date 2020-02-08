@@ -391,7 +391,7 @@ void deathAnimation()
     }
 }
 
-//To move our hero - a corriger car inutile de prendre le screen
+//To move our hero
 void moveCharacter(int direction)
 {
     //position voulues
@@ -406,7 +406,7 @@ void moveCharacter(int direction)
     case 0:
 
         if((int)currentCharacterPosition - 1 < 0
-                || (int)currentCharacterPosition % 12 == 0)//ou si on est a la limite de notre board
+                || (int)currentCharacterPosition % 12 == 0)//ou si on se trouve à la limite de notre board
         {
             return;
         }
@@ -424,7 +424,7 @@ void moveCharacter(int direction)
             lifeCount-- ;
         }
 
-        if(board[desiredLeftPosition].elementType == BOTTLE)
+        if(board[desiredLeftPosition].elementType == BOTTLE && bottleCount <20)
         {
             //On génére un nouvelle bouteille
             int value = getRandomValue(48,143);
@@ -462,7 +462,7 @@ void moveCharacter(int direction)
             lifeCount-- ;
         }
 
-        if(board[desiredUpPosition].elementType == BOTTLE)
+        if(board[desiredUpPosition].elementType == BOTTLE && bottleCount <20)
         {
             int value = getRandomValue(48,143);
             setSprite(value, "graphics/bottle.png", BOTTLE);
@@ -504,7 +504,7 @@ void moveCharacter(int direction)
             lifeCount++ ;;
         }
 
-        if(board[desiredRightPosition].elementType == BOTTLE)
+        if(board[desiredRightPosition].elementType == BOTTLE && bottleCount <20)
         {
             int value = getRandomValue(48,143);
             setSprite(value, "graphics/bottle.png", BOTTLE);
@@ -536,7 +536,7 @@ void moveCharacter(int direction)
             lifeCount-- ;
         }
 
-        if(board[desiredDownPosition].elementType == BOTTLE)
+        if(board[desiredDownPosition].elementType == BOTTLE && bottleCount <20)
         {
             int value = getRandomValue(48,143);
             setSprite(value, "graphics/bottle.png", BOTTLE);
