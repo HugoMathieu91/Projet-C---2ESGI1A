@@ -392,7 +392,7 @@ void deathAnimation()
 }
 
 //To move our hero - a corriger car inutile de prendre le screen
-void moveCharacter(SDL_Surface *screen, int direction)
+void moveCharacter(int direction)
 {
     //position voulues
     int desiredLeftPosition = 0;
@@ -936,16 +936,16 @@ void play()
 
                 break ;
             case SDLK_LEFT:
-                moveCharacter(screen, 0);
+                moveCharacter(0);
                 break ;
             case SDLK_UP:
-                moveCharacter(screen, 1);
+                moveCharacter(1);
                 break ;
             case SDLK_RIGHT:
-                moveCharacter(screen, 2);
+                moveCharacter(2);
                 break ;
             case SDLK_DOWN:
-                moveCharacter(screen, 3);
+                moveCharacter(3);
                 break ;
 
             default:

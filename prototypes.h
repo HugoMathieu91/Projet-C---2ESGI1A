@@ -10,6 +10,7 @@ void initTTF() ;
 void introDialog(int dialNumb) ;
 int introduction() ;
 int menu(SDL_Surface *screen) ;
+void moveCharacter(int direction) ;
 void pause() ;
 void placeCharacter(int choice, int x, int y);
 void play() ;
