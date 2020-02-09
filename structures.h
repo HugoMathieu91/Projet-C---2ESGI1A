@@ -1,3 +1,4 @@
+//A utiliser
 typedef enum {BAS,HAUT,GAUCHE,DROITE} Direction;
 
 typedef enum {NONE, HERO, BOSS, TABLE, BOTTLE, FIRE, LIFE} ElementType;
