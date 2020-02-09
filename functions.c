@@ -1,7 +1,7 @@
 #include "init.c"
 
 //Ecrit OK dans stdout mais fait stopper le programme...
-void connectDB()
+/*void connectDB()
 {
     MYSQL mysql ;
     mysql_init(&mysql) ;
@@ -15,7 +15,7 @@ void connectDB()
    else{
     fprintf(stderr,"not ok") ;
    }
-}
+}*/
 //Fonction pour charger une musique
 void getAudio(int choice)
 {
