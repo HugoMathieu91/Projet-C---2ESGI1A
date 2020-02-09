@@ -243,11 +243,10 @@
 	"constants.h"
 	"prototypes.h"
 
-1581281795 source:c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\init.c
+1581282677 source:c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\init.c
 	<stdlib.h>
 	<stdio.h>
 	<time.h>
-	<winsock.h>
 	<SDL/SDL.h>
 	<SDL/SDL_image.h>
 	<SDL/SDL_ttf.h>
