@@ -10,7 +10,7 @@
 	"constants.h"
 	"prototypes.h"
 
-1581274211 source:c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\functions.c
+1581282617 source:c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\functions.c
 	"init.c"
 
 1581277464 c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\prototypes.h
@@ -232,12 +232,10 @@
 	"begin_code.h"
 	"close_code.h"
 
-1581263998 c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\init.c
+1581282677 c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\init.c
 	<stdlib.h>
 	<stdio.h>
 	<time.h>
-	<winsock.h>
-	<MYSQL/mysql.h>
 	<SDL/SDL.h>
 	<SDL/SDL_image.h>
 	<SDL/SDL_ttf.h>
@@ -245,12 +243,11 @@
 	"constants.h"
 	"prototypes.h"
 
-1581263998 source:c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\init.c
+1581281795 source:c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\init.c
 	<stdlib.h>
 	<stdio.h>
 	<time.h>
 	<winsock.h>
-	<MYSQL/mysql.h>
 	<SDL/SDL.h>
 	<SDL/SDL_image.h>
 	<SDL/SDL_ttf.h>

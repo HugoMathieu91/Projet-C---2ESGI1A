@@ -787,7 +787,7 @@ void gameOver()
     gameOverPos.x = 0 ;
     gameOverPos.y = 0 ;
 
-    gameOver = IMG_Load("graphics/gameOver.jpg") ;
+    gameOver = IMG_Load("graphics/gameOver.png") ;
      SDL_BlitSurface(gameOver, NULL, screen, &gameOverPos) ;
 
      SDL_Flip(screen) ;
