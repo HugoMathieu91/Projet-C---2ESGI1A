@@ -1,5 +1,21 @@
 #include "init.c"
 
+//Ecrit OK dans stdout mais fait stopper le programme...
+void connectDB()
+{
+    MYSQL mysql ;
+    mysql_init(&mysql) ;
+    mysql_options(&mysql,MYSQL_READ_DEFAULT_GROUP,"MYSQL_READ_DEFAULT_GROUP");
+   if(mysql_real_connect(&mysql,"127.0.0.1","root","","BDD_ProjetC",0,NULL,0))
+   {
+       fprintf(stdout, "OK") ;
+        mysql_close(&mysql);
+
+   }
+   else{
+    fprintf(stderr,"not ok") ;
+   }
+}
 //Fonction pour charger une musique
 void getAudio(int choice)
 {
@@ -625,7 +641,8 @@ int menu(SDL_Surface *screen)
                 switch(currentPosition)
                 {
                 case 0:
-                    //run = 0 ;
+
+                    //connectDB() ;
                     introduction(screen);
                     break;
                 case 1:

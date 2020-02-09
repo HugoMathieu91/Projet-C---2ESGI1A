@@ -10,7 +10,7 @@
 	"constants.h"
 	"prototypes.h"
 
-1581174296 source:c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\functions.c
+1581265756 source:c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\functions.c
 	"init.c"
 
 1581168573 c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\prototypes.h
@@ -232,11 +232,12 @@
 	"begin_code.h"
 	"close_code.h"
 
-1581108139 c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\init.c
+1581263998 c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\init.c
 	<stdlib.h>
 	<stdio.h>
 	<time.h>
 	<winsock.h>
+	<MYSQL/mysql.h>
 	<SDL/SDL.h>
 	<SDL/SDL_image.h>
 	<SDL/SDL_ttf.h>
@@ -244,11 +245,12 @@
 	"constants.h"
 	"prototypes.h"
 
-1581108139 source:c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\init.c
+1581263998 source:c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\init.c
 	<stdlib.h>
 	<stdio.h>
 	<time.h>
 	<winsock.h>
+	<MYSQL/mysql.h>
 	<SDL/SDL.h>
 	<SDL/SDL_image.h>
 	<SDL/SDL_ttf.h>
@@ -267,4 +269,27 @@
 
 1325738640 c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\include\sdl\sdl_types.h
 	"SDL_stdinc.h"
+
+1135285278 c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\include\mysql\mysql.h
+	<sys/types.h>
+	<winsock.h>
+	"mysql_com.h"
+	"mysql_time.h"
+	"mysql_version.h"
+	"typelib.h"
+	"my_list.h"
+	"my_alloc.h"
+
+1135285456 c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\include\mysql\mysql_com.h
+
+1130013324 c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\include\mysql\mysql_time.h
+
+1130013324 c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\include\mysql\mysql_version.h
+	<custom_conf.h>
+
+1130013326 c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\include\mysql\typelib.h
+
+1130013326 c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\include\mysql\my_list.h
+
+1130013324 c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\include\mysql\my_alloc.h
 
