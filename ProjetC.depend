@@ -289,3 +289,50 @@
 
 1130013324 c:\users\hugo\desktop\cours\2eme annee\c\projet\projetc\include\mysql\my_alloc.h
 
+1581704313 source:c:\users\hugo mathieu\desktop\cours\2eme annee\language c\esgi adventure\projet-c---2esgi1a\functions.c
+	"init.c"
+
+1581700457 c:\users\hugo mathieu\desktop\cours\2eme annee\language c\esgi adventure\projet-c---2esgi1a\init.c
+	<stdlib.h>
+	<stdio.h>
+	<time.h>
+	<winsock.h>
+	<MYSQL/mysql.h>
+	<SDL/SDL.h>
+	<SDL/SDL_image.h>
+	<SDL/SDL_ttf.h>
+	<SDL/SDL_mixer.h>
+	"constants.h"
+	"prototypes.h"
+
+1581283230 c:\users\hugo mathieu\desktop\cours\2eme annee\language c\esgi adventure\projet-c---2esgi1a\constants.h
+
+1581283230 c:\users\hugo mathieu\desktop\cours\2eme annee\language c\esgi adventure\projet-c---2esgi1a\prototypes.h
+	"structures.h"
+
+1581283230 c:\users\hugo mathieu\desktop\cours\2eme annee\language c\esgi adventure\projet-c---2esgi1a\structures.h
+
+1581700457 source:c:\users\hugo mathieu\desktop\cours\2eme annee\language c\esgi adventure\projet-c---2esgi1a\init.c
+	<stdlib.h>
+	<stdio.h>
+	<time.h>
+	<winsock.h>
+	<MYSQL/mysql.h>
+	<SDL/SDL.h>
+	<SDL/SDL_image.h>
+	<SDL/SDL_ttf.h>
+	<SDL/SDL_mixer.h>
+	"constants.h"
+	"prototypes.h"
+
+1581283230 source:c:\users\hugo mathieu\desktop\cours\2eme annee\language c\esgi adventure\projet-c---2esgi1a\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<SDL/SDL.h>
+	<SDL/SDL_image.h>
+	<SDL/SDL_ttf.h>
+	<SDL/SDL_mixer.h>
+	"constants.h"
+	"prototypes.h"
+

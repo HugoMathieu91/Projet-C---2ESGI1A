@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-//#include <winsock.h>
-//#include <MYSQL/mysql.h>
+#include <winsock.h>
+#include <MYSQL/mysql.h>
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_ttf.h>
@@ -38,10 +38,6 @@ int currentDirection;
 int currentCharacterPosition;
 //Sprite affiché
 int currentCharacterSprite;
-
-//int currentFireSprite;
-//int fireBallPosition;
-
 
 //Structure représentant notre espace de jeu
 GridSquare board[144];

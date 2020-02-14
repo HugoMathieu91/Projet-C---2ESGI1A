@@ -1,21 +1,37 @@
 #include "init.c"
 
-//Ecrit OK dans stdout mais fait stopper le programme...
-/*void connectDB()
-{
-    MYSQL mysql ;
-    mysql_init(&mysql) ;
-    mysql_options(&mysql,MYSQL_READ_DEFAULT_GROUP,"MYSQL_READ_DEFAULT_GROUP");
-   if(mysql_real_connect(&mysql,"127.0.0.1","root","","BDD_ProjetC",0,NULL,0))
-   {
-       fprintf(stdout, "OK") ;
-        mysql_close(&mysql);
 
-   }
-   else{
-    fprintf(stderr,"not ok") ;
-   }
-}*/
+void connectDB()
+{
+    MYSQL *con = mysql_init(NULL);
+
+    if (con == NULL)
+    {
+        fprintf(stderr, "%s\n", mysql_error(con));
+        exit(1);
+    }
+
+    printf("\nConnexion a la base reussie");
+    if (mysql_real_connect(con, "localhost", "root", "",
+                           "BDD_ProjetC", 0, NULL, 0) == NULL)
+    {
+        fprintf(stderr, "%s\n", mysql_error(con));
+        mysql_close(con);
+        exit(1);
+    }
+    fprintf(stdout,"\nL'insertion a reussie");
+    if (mysql_query(con, "INSERT INTO users VALUES ('test')"))
+    {
+        fprintf(stderr, "%s\n", mysql_error(con));
+        mysql_close(con);
+        exit(1);
+    }
+   // printf("\nFin de l'utilisation MySQL");
+  //  mysql_close(con);
+
+
+}
+
 //Fonction pour charger une musique
 void getAudio(int choice)
 {
@@ -73,8 +89,6 @@ void setHeroSprites()
     heroDownSprites[1] = "graphics/GuyBot2.png";
     heroDownSprites[2] = "graphics/GuyBot3.png";
 }
-
-
 
 //Set a fire line
 void setFireLine()
@@ -191,8 +205,6 @@ void sananesDestruction()
     getAudio(3) ;
     setSprite(18, "graphics/testGrid.png",NONE);
     setSprite(18, "graphics/diplome.png",NONE) ;
-
-
 }
 
 //Set a sprite on the game grid
@@ -261,6 +273,17 @@ int getRandomValue(int lower, int upper)
 //Generate game grid
 void generateGrid()
 {
+    FILE *gridDimensions ;
+    int height_case_pix ;
+    int width_case_pix ;
+    gridDimensions = fopen("configuration.txt","rt") ;
+    rewind(gridDimensions) ;
+
+    if(gridDimensions != NULL)
+    {
+        fscanf(gridDimensions, "%2d %2d", &height_case_pix, &width_case_pix) ;
+    }
+
     int initialX = 0;
     int incrementalX = initialX;
     int incrementalY = 0;
@@ -269,8 +292,8 @@ void generateGrid()
     for(int i=0; i < 144; i++)
     {
         board[i].image = IMG_Load("graphics/testGrid.png");
-        board[i].position.h = height_case;
-        board[i].position.w = width_case;
+        board[i].position.h = height_case_pix;
+        board[i].position.w = width_case_pix;
         board[i].position.x = incrementalX;
         board[i].position.y = incrementalY;
         ElementType type = NONE;
@@ -279,12 +302,12 @@ void generateGrid()
         //Pour faire les lignes
         if(incrementalX < 11*width_case + initialX)
         {
-            incrementalX+=width_case;
+            incrementalX+=width_case_pix;
         }
         else
         {
             incrementalX = initialX;
-            incrementalY += height_case;
+            incrementalY += height_case_pix;
         }
         SDL_BlitSurface(board[i].image, NULL, screen, &board[i].position) ;
         SDL_Flip(screen);
@@ -1026,6 +1049,13 @@ void introDialog(int dialNumb)
 {
     initTTF() ;
 
+   /* FILE *dialogFic ;
+    dialogFic = fopen("dialogues.txt", "r") ;
+    char dialog[200] ;
+
+    fgets(dialog, 200, dialogFic) ;*/
+
+
     TTF_Font *police = NULL;
     police = TTF_OpenFont("fonts/sixty.ttf", 20);
 
@@ -1040,7 +1070,7 @@ void introDialog(int dialNumb)
     switch(dialNumb)
     {
     case 0:
-        dial = TTF_RenderText_Blended(police, "Tout commence en cours de C avec Monsieur Sananes", color);
+        dial = TTF_RenderText_Blended(police, "Tout commence en cours de C avec Monsieur Sananes" , color);
         dialPosition.x = 25 ;
         dialPosition.y = 25 ;
         break ;
